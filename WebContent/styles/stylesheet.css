@@ -1,0 +1,9 @@
+#logo{
+	float: right;
+	display: inline;
+}
+
+.name{
+	float: left;
+	position: relative;
+}
