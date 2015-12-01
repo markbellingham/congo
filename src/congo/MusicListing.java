@@ -39,7 +39,7 @@ public class MusicListing extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();		
 		out.println(docType + "<h1>Congo's Music Store</h1>");
-		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a><br /><br />");
+		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a><br /><br />");
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch(Exception e) {
