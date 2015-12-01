@@ -33,8 +33,11 @@ public class MusicListing extends HttpServlet {
 		String password = "Lerkmant3"; 	// Password
 		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 
-		String docType =
-		    "<!DOCTYPE HTML >";
+		String docType = 	"<!DOCTYPE HTML >" +
+							"<html><head>" +
+							"<meta charset=\"UTF-8\">" +
+							"<title>Congo's Music Store</title>" +
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();		
@@ -61,7 +64,7 @@ public class MusicListing extends HttpServlet {
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
-		    out.println("<table border=\"1\"><tr><th>Recording ID</th><th>Artist</th><th>Album</th><th>Category</th><th>Number of tracks</th><th>Price</th></tr>");
+		    out.println("<table id=\"musicList\"><tr><th>Recording ID</th><th>Artist</th><th>Album</th><th>Category</th><th>Number of tracks</th><th>Price</th></tr>");
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("recording_id") + "</td>");
 			out.println("<td>" + rs1.getString("artist_name") + "</td>"); 	  

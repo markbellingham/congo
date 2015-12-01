@@ -39,8 +39,11 @@ public class AlbumLister extends HttpServlet {
 		String password = "Lerkmant3";
 		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 
-		String docType =
-		    "<!DOCTYPE HTML >";
+		String docType = 	"<!DOCTYPE HTML >" +
+							"<html><head>" +
+							"<meta charset=\"UTF-8\">" +
+							"<title>Congo's Music Store</title>" +
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
 
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter();
@@ -48,7 +51,7 @@ public class AlbumLister extends HttpServlet {
 		String category = request.getParameter("category");
 		
 		out.println(docType + "<h1>Congo's Music Store</h1>");
-		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a><br /><br />");
+		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a></nav><br /><br />");
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch(Exception e) {
@@ -57,20 +60,20 @@ public class AlbumLister extends HttpServlet {
 		
 		// connecting to database
 		try{
-		    conn = DriverManager.getConnection(url, user, password);
-			
+		    conn = DriverManager.getConnection(url, user, password);			
 		}
 		catch(SQLException se) {
 		    System.err.println(se);
 		}
 		// Create select statement and execute it
-		
+		out.println("These are the albums in the " + category + " category:");
 		try{
 		    String selectSQL = "select * from music_recordings where category = '" + category + "'";
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
-	    out.println("<table border=\"1\"><tr><th>Artist</th><th>Album</th><th>Number of Tracks</th><th>Price</th></tr>");
+		    out.println("<br/><br/>");
+		    out.println("<table id=\"musicList\"><tr><th>Artist</th><th>Album</th><th>Number of Tracks</th><th>Price</th></tr>");
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("artist_name") + "</td>");
 			out.println("<td>" + rs1.getString("title") + "</td>"); 	  
