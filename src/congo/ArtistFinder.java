@@ -15,16 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class albumLister
+ * Servlet implementation class ArtistFinder
  */
-@WebServlet("/albumLister")
-public class AlbumLister extends HttpServlet {
+@WebServlet("/ArtistFinder")
+public class ArtistFinder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AlbumLister() {
+    public ArtistFinder() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -48,11 +48,11 @@ public class AlbumLister extends HttpServlet {
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter();
 		
-		String category = request.getParameter("category");
+		String name = request.getParameter("name");
 		
 		out.println(docType + "<h1>Congo's Music Store</h1>");
 		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-				"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a><br /><br />");
+					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a><br /><br />");
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch(Exception e) {
@@ -61,33 +61,36 @@ public class AlbumLister extends HttpServlet {
 		
 		// connecting to database
 		try{
-		    conn = DriverManager.getConnection(url, user, password);			
+		    conn = DriverManager.getConnection(url, user, password);
+			
 		}
 		catch(SQLException se) {
 		    System.err.println(se);
 		}
 		// Create select statement and execute it
-		out.println("These are the albums in the " + category + " category:");
+		
 		try{
-		    String selectSQL = "select * from music_recordings where category = '" + category + "'";
+		    String selectSQL = "select * from music_recordings where artist_name = '" + name + "'";
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
-		    // Retrieve the results
-		    out.println("<br/><br/>");
-		    out.println("<table id=\"musicList\"><tr><th>Artist</th><th>Album</th><th>Number of Tracks</th><th>Price</th></tr>");
-		    while(rs1.next()){
-			out.println("<tr><td> "+ rs1.getString("artist_name") + "</td>");
-			out.println("<td>" + rs1.getString("title") + "</td>"); 	  
-			out.println("<td> " + rs1.getString("num_tracks") + "</td>");
-			out.println("<td> " + rs1.getFloat("price") + "</td>");
-			out.println("</tr>");
-			
-		    }
-		    out.println("</table>");
-		    conn.close();
-		} catch(SQLException se) {
-		    System.err.println(se);
-		}
+		    if (rs1.next()) {
+			    // Retrieve the results
+			    out.println("<table id=\"musicList\"><tr><th>Artist</th><th>Album</th><th>Number of Tracks</th><th>Price</th></tr>");
+		    	do{
+					out.println("<tr><td> "+ rs1.getString("artist_name") + "</td>");
+					out.println("<td> " + rs1.getString("title") + "</td>"); 	  
+					out.println("<td> " + rs1.getString("num_tracks") + "</td>");
+					out.println("<td> " + rs1.getFloat("price") + "</td>");
+					out.println("</tr>");			
+				    }while(rs1.next());
+					} else {
+						out.println("The query returned no results. Please check your spelling or try a different artist");
+					}
+		    		out.println("</table>");
+		    		conn.close();
+				}catch(SQLException se) {
+				    System.err.println(se);
+				}
 	}
 
 	/**
