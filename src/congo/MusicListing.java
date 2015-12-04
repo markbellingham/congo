@@ -70,7 +70,7 @@ public class MusicListing extends HttpServlet {
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("recording_id") + "</td>");
 			out.println("<td>" + rs1.getString("artist_name") + "</td>"); 	  
-			out.println("<td> " + rs1.getString("title") + "</td>");
+			out.println("<td><a href=\"TrackLister?r_id="+rs1.getInt("recording_id") + "\">" + rs1.getString("title") + "</a></td>"); 
 			out.println("<td> " + rs1.getString("category") + "</td>");
 			out.println("<td> " + rs1.getString("num_tracks") + "</td>");
 			out.println("<td> " + rs1.getFloat("price") + "</td>");

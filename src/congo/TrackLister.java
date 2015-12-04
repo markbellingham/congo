@@ -71,8 +71,7 @@ public class TrackLister extends HttpServlet {
 		try{
 			System.out.println(album_name);
 			
-		    String selectSQL = "select  * from music_tracks where recording_id ="+ album_name ;
-		    System.out.print(selectSQL);
+		    String selectSQL = "select * from music_tracks where recording_id ="+ album_name ;
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
@@ -84,7 +83,7 @@ public class TrackLister extends HttpServlet {
 			out.println("<td>" + rs1.getString("title") + "</td>");
 			int minutes = Integer.parseInt(rs1.getString("duration"))/60;
 			int seconds = Integer.parseInt(rs1.getString("duration"))%60;
-			out.println("<td>" + minutes + "m" + String.format("%02d", seconds) + "sec" + "</td>");
+			out.println("<td>" + minutes + "m " + String.format("%02d", seconds) + "sec" + "</td>");
 			out.println("</tr>");			
 		    }
 		    out.println("</table>");
