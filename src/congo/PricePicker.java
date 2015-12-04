@@ -80,6 +80,9 @@ public class PricePicker extends HttpServlet {
 			out.println("<td>" + rs1.getString("title") + "</td>"); 	  
 			out.println("<td> " + rs1.getString("num_tracks") + "</td>");
 			out.println("<td> " + rs1.getFloat("price") + "</td>");
+			out.println("<td><form action=\"add_to_order\" method=\"get\">" +
+					"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
+					"<input type=\"submit\" value=\"Add\" >" + "</form>");
 			out.println("</tr>");
 			
 		    }

@@ -42,7 +42,8 @@ public class MusicListing extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();		
 		out.println(docType + "<h1>Congo's Music Store</h1>");
-		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a><br /><br />");
+		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
+				"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a><br /><br />");
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch(Exception e) {
@@ -64,8 +65,8 @@ public class MusicListing extends HttpServlet {
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
-			out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a><br /><br />");
+		    out.println("<br/><br/>");
+		    out.println("<table id=\"musicList\"><tr><th>Recording ID</th><th>Artist</th><th>Album</th><th>Category</th><th>Number of Tracks</th><th>Price</th></tr>");
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("recording_id") + "</td>");
 			out.println("<td>" + rs1.getString("artist_name") + "</td>"); 	  
@@ -73,6 +74,9 @@ public class MusicListing extends HttpServlet {
 			out.println("<td> " + rs1.getString("category") + "</td>");
 			out.println("<td> " + rs1.getString("num_tracks") + "</td>");
 			out.println("<td> " + rs1.getFloat("price") + "</td>");
+			out.println("<td><form action=\"add_to_order\" method=\"get\">" +
+					"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
+					"<input type=\"submit\" value=\"Add\" >" + "</form>");
 			out.println("</tr>");
 			
 		    }
