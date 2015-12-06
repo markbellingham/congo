@@ -35,11 +35,19 @@ public class ShowOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String docType =
-			    "<!DOCTYPE HTML\">\n";
+			String docType = "<!DOCTYPE HTML >" +
+					"<html><head>" +
+					"<meta charset=\"UTF-8\">" +
+					"<title>Congo's Music Store</title>" +
+					"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
+		
 			response.setContentType("text/html"); 
 			PrintWriter out = response.getWriter();
-			out.println(docType);
+			
+			out.println(docType + "<h1>Congo's Music Store</h1>");
+			out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
+					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a><br /><br />");
+			
 			float total = 0.0f;
 			float totalPerAlbum = 0.0f;
 			float grandTotal = 0.0f;
@@ -98,7 +106,7 @@ public class ShowOrder extends HttpServlet {
 			    out.println("<Center><H1>Current Order</Center>");
 			    // print out table header
 				out.println("<table id=\"musicList\">" +
-				    "<tr><th>Artist</th><th>Album</th><th>Price per album</th><th style=\"width:150px\">Quantity</th><th>Total per album</th><th></th></tr>");
+				    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th style=\"width:150px\">Quantity</th><th>Totals</th><th></th></tr>");
 
 				//print out table rows one for each row returned in rs1
 				while(rs1.next()){
@@ -123,7 +131,7 @@ public class ShowOrder extends HttpServlet {
 				    			"<input type=\"hidden\" name=\"name\" value=\"" + rs1.getString("title") + "\">" +
 				    			"<input type=\"submit\" value=\"Update\"></td></form><td>" + totalPerAlbum + "</td><td>");
 				    // Add button to remove album which goes to new servlet RemoveAlbum.java
-				    out.print("<form action=\"remove_pizza\" method=\"get\">" +
+				    out.print("<form action=\"RemoveAlbum\" method=\"get\">" +
 				    			"<input type=\"hidden\" name=\"name\" value=\"" + rs1.getString("title") + "\">" +
 						      	"<input type=\"submit\" value=\"Delete\"></td></form>");
 				}
