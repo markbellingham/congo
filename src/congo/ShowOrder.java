@@ -126,9 +126,9 @@ public class ShowOrder extends HttpServlet {
 				    totalPerAlbum = rs1.getFloat("price") * quantity;
 				    grandTotal += totalPerAlbum;
 				    // Add button to change quantities
-				    out.print("<td><input type=\"number\" name=\"quantity\" value=\"" + quantity + "\" min=\"1\" max=\"5\" style=\"width:30px\">" +
-				    			"<form action=\"add_to_order\" method=\"get\">" +
-				    			"<input type=\"hidden\" name=\"name\" value=\"" + rs1.getString("title") + "\">" +
+				    out.print("<td><form action=\"UpdateOrder\" method=\"get\">" +
+				    		 	"<input type=\"number\" name=\"quantity\" value=\"" + quantity + "\" min=\"1\" max=\"5\" style=\"width:30px\">" +				    			
+				    			"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
 				    			"<input type=\"submit\" value=\"Update\"></td></form><td>" + totalPerAlbum + "</td><td>");
 				    // Add button to remove album which goes to new servlet RemoveAlbum.java
 				    out.print("<form action=\"RemoveAlbum\" method=\"get\">" +
