@@ -48,7 +48,7 @@ public class TrackLister extends HttpServlet {
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter();
 		
-		String album_name = request.getParameter("r_id");
+		String recording_id = request.getParameter("r_id");
 		int trackNumber = 0;
 		
 		out.println(docType + "<h1>Congo's Music Store</h1>");
@@ -69,9 +69,7 @@ public class TrackLister extends HttpServlet {
 		}
 		// Create select statement and execute it
 		try{
-			System.out.println(album_name);
-			
-		    String selectSQL = "select * from music_tracks where recording_id ="+ album_name ;
+		    String selectSQL = "select * from music_tracks where recording_id = " + recording_id ;
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
