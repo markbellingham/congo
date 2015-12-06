@@ -107,8 +107,7 @@ public class ShowOrder extends HttpServlet {
 				    out.print("<td>" + rs1.getString("title") + "</td>");
 				    out.print("<td>" + rs1.getFloat("price") + "</td>");
 				    
-				    //Total up single albums
-				    total = total + rs1.getFloat("price");
+				    //Total up albums
 					int quantity = 0;
 				    for (int i = 0; i < albumArray.size(); i++){
 				    	if (albumArray.get(i).equals(albumArray.get(position))) {
@@ -133,8 +132,8 @@ public class ShowOrder extends HttpServlet {
 			    }
 				//Close table
 				out.println("<tr>");
-				out.print("<td colspan=\"2\"><b>Total</b></td>");
-				out.print("<td><b>" + total + "</b></td><td></td><td><b>" + grandTotal + "</b></td><td></td>");
+				out.print("<td colspan=\"4\"><b>Total</b></td>");
+				out.print("<td><b>" + grandTotal + "</b></td><td></td>");
 				out.println("</tr></table>");
 			    
 				out.println("<p><a href=\"index.html\">Go Home<a>");
