@@ -49,7 +49,7 @@ public class RemoveAlbum extends HttpServlet {
 			
 			out.println(docType + "<h1>Congo's Music Store</h1>");
 			out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a><br /><br />");
+					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a><br /><br />");
 			
 			//get a session
 			HttpSession session = request.getSession() ;
@@ -59,8 +59,13 @@ public class RemoveAlbum extends HttpServlet {
 			albumArray = (ArrayList<String>)session.getAttribute("myorder");
 			
 			// remove our album from the order
-			albumArray.remove(album_name);
-				session.setAttribute("myorder", albumArray);
+			for (int i = 0; i < albumArray.size(); i++) {
+				if (albumArray.get(i).equals(album_name)) {
+					albumArray.remove(album_name);
+				}
+			}
+			
+			session.setAttribute("myorder", albumArray);
 				
 			// Might as well display the album details
 			// Getting the  details from the database

@@ -42,7 +42,7 @@ public class AddToOrder extends HttpServlet {
 			
 			out.println(docType + "<h1>Congo's Music Store</h1>");
 			out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a><br /><br />");
+					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a><br /><br />");
 			
 			//get a session
 			HttpSession session = request.getSession();
