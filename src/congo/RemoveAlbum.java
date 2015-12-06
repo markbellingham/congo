@@ -47,11 +47,12 @@ public class RemoveAlbum extends HttpServlet {
 			// find out the album name passed in from ShowOrder
 			String album_name = request.getParameter("name");
 			
+			// Print the title and menus
 			out.println(docType + "<h1>Congo's Music Store</h1>");
 			out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
 					"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a><br /><br />");
 			
-			//get a session
+			// get a session
 			HttpSession session = request.getSession() ;
 			
 			ArrayList<String> albumArray;  // albumArray is list of the albums on our order
@@ -65,11 +66,11 @@ public class RemoveAlbum extends HttpServlet {
 				}
 			}
 			
+			// Set the session to the updated version of albumArray
 			session.setAttribute("myorder", albumArray);
 				
 			// Might as well display the album details
-			// Getting the  details from the database
-			
+			// Getting the  details from the database			
 			Connection conn = null; // Create connection object
 			String database = "bellingm"; // Name of database
 			String user = "bellingm"; // 
@@ -87,11 +88,12 @@ public class RemoveAlbum extends HttpServlet {
 			try{
 			    conn = DriverManager.getConnection(url, user, password);
 			    String selectSQL = "select * from music_recordings where title ='" + album_name + "'";
-			    System.err.println("DEBUG: Query: " + selectSQL);
+			    System.err.println("DEBUG: Query: " + selectSQL);	// to help find errors in the SQL statement - only printed to console
 			    Statement stmt = conn.createStatement();
-			    ResultSet rs1 = stmt.executeQuery(selectSQL);
+			    ResultSet rs1 = stmt.executeQuery(selectSQL);		// Create a result set with the data returned by the SQL statement
 			    rs1.next();
 			    
+			    // print out some useful information to the user
 			    out.println("<p>The following album has been removed from your order<p>");
 			    out.println("<table id=\"musicList\" <tr><th></th><th></th></tr>");
 			    out.print("<tr><td>Artist</td><td>" + rs1.getString("artist_name") + "</td></tr>");

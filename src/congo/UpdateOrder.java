@@ -36,23 +36,24 @@ public class UpdateOrder extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String docType = 	"<!DOCTYPE HTML >" +
-				"<html><head>" +
-				"<meta charset=\"UTF-8\">" +
-				"<title>Congo's Music Store</title>" +
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
+							"<html><head>" +
+							"<meta charset=\"UTF-8\">" +
+							"<title>Congo's Music Store</title>" +
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
 		
 				response.setContentType("text/html"); 
 				PrintWriter out = response.getWriter();
 				
-				// find out the album name passed in
+				// find out the album name and quantity passed in
 				String album_name = request.getParameter("title");
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
 				
+				// print title and main menus
 				out.println(docType + "<h1>Congo's Music Store</h1>");
 				out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-						"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a><br /><br />");
+							"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a><br /><br />");
 				
-				//get a session
+				// get a session
 				HttpSession session = request.getSession();
 				
 				ArrayList<String> albumArray;  // albumArray is list of the albums in our order
@@ -71,11 +72,11 @@ public class UpdateOrder extends HttpServlet {
 					albumArray.add(album_name);
 				}
 				
+				// update the session with the latest info from albumArray
 				session.setAttribute("myorder", albumArray);
 					
 				// Might as well display the album details
-				// Getting the  details from the database
-				
+				// Getting the  details from the database				
 				Connection conn =null; // Create connection object
 				String database = "bellingm"; // Name of database
 				String user = "bellingm"; // 
