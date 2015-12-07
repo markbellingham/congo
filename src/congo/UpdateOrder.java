@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,11 +62,7 @@ public class UpdateOrder extends HttpServlet {
 				albumArray = (ArrayList<String>)session.getAttribute("myorder");
 				
 				// First remove our album from the order
-				for (int i = 0; i < albumArray.size(); i++) {
-					if (albumArray.get(i).equals(album_name)) {
-						albumArray.remove(album_name);
-					}
-				}
+				albumArray.removeAll(Collections.singleton(album_name));
 				
 				// Then add our album back to the order for the required amount
 				for (int i = 0; i < quantity; i++) {

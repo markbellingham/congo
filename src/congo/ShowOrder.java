@@ -108,7 +108,8 @@ public class ShowOrder extends HttpServlet {
 			    // print out table header
 				out.println("<table id=\"musicList\">" +
 				    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th style=\"width:150px\">Quantity</th><th>Totals</th><th></th></tr>");
-
+				
+				System.out.println(albumArray);
 				// print out table rows one for each row returned in rs1
 				while(rs1.next()){
 				    out.print("<tr>");
