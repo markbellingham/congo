@@ -45,9 +45,12 @@ public class Checkout extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		// print the title and menu
-		out.println(docType + "<h1>Congo's Music Store</h1>");
-		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-				"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a><br /><br />");
+		out.println(docType);
+		out.println("<img id=\"logo\" src=\"images/logo.png\">");
+		out.println("<header id=\"name\">");
+		out.println("<h1>Congo's Music Store</h1></header><br/>");
+		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
+				" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
 		
 		float total = 0.0f;
 		float totalPerAlbum = 0.0f;
@@ -101,7 +104,7 @@ public class Checkout extends HttpServlet {
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL1);
 		    
-		    out.println("<Center><H1>Checkout</Center>");
+		    out.println("<div id=\"page_title\"><h2>Checkout</h2></div>");
 		    // print out table header
 			out.println("<table id=\"musicList\">" +
 			    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th style=\"width:150px\">Quantity</th><th>Totals</th></tr>");

@@ -1,11 +1,29 @@
 #logo {
-	float: right;
-	display: inline;
+	clear: both;
+	position: absolute;
+	left: 900px;
+	top: 0px
 }
 
-.name {
+#name {
 	float: left;
 	position: relative;
+	font-family: Helvetica, Arial, "Trebuchet MS", sans-serif;
+	font-weight: bold;
+	font-size: xx-large;
+	color: #0b5000;
+}
+
+nav {
+	clear: left;
+}
+
+#page_title {
+	color: #0b5000;
+}
+
+body {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
 #musicList {

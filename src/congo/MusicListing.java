@@ -41,9 +41,15 @@ public class MusicListing extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();		
-		out.println(docType + "<h1>Congo's Music Store</h1>");
-		out.println("<a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-				"| <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a><br /><br />");
+
+		// print the title and menu
+		out.println(docType);
+		out.println("<img id=\"logo\" src=\"images/logo.png\">");
+		out.println("<header id=\"name\">");
+		out.println("<h1>Congo's Music Store</h1></header><br/>");
+		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
+				" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
+		
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch(Exception e) {
