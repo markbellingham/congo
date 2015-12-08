@@ -146,7 +146,7 @@ public class ShowOrder extends HttpServlet {
 				out.println("<tr>");
 				// Print the total for all albums
 				out.print("<td colspan=\"4\"><b>Total</b></td>");
-				out.print("<td><b>" + grandTotal + "</b></td><td></td>");
+				out.print("<td><b>" + String.format("%.2f", grandTotal) + "</b></td><td></td>");
 				// Close table
 				out.println("</tr></table>");
 			    

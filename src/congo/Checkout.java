@@ -137,7 +137,7 @@ public class Checkout extends HttpServlet {
 			out.println("<tr>");
 			// Print the total for all albums
 			out.print("<td colspan=\"4\"><b>Total</b></td>");
-			out.print("<td><b>" + grandTotal + "</b></td>");
+			out.print("<td><b>" + String.format("%.2f", grandTotal) + "</b></td>");
 			// Close table
 			out.println("</tr></table>");
 			out.println("<br/><br/>");
