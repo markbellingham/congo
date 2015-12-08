@@ -147,7 +147,7 @@ public class ShowOrder extends HttpServlet {
 				// Close table
 				out.println("</tr></table>");
 			    
-				out.println("<p><a href=\"index.html\">Go Home<a>");
+				out.println("<p><a href=\"index.html\">Go Home<a> or <a href=\"Checkout\">Checkout</a>");
 				out.println("</body></html>");
 	}
 

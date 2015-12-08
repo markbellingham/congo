@@ -61,7 +61,7 @@ public class RemoveAlbum extends HttpServlet {
 			albumArray = (ArrayList<String>)session.getAttribute("myorder");
 			
 			System.out.println(albumArray.size());
-			// remove our album from the order
+			// remove all instances of the selected album from the order
 			albumArray.removeAll(Collections.singleton(album_name));
 			
 			// Set the session to the updated version of albumArray
