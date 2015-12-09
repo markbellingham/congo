@@ -49,6 +49,8 @@ public class TrackLister extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		String recording_id = request.getParameter("r_id");
+		String artist = request.getParameter("name");
+		String album = request.getParameter("album");
 		int trackNumber = 0;
 		
 		// print the title and menu
@@ -78,7 +80,7 @@ public class TrackLister extends HttpServlet {
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
-		    out.println("<br/><br/>");
+		    out.println("These are the tracks from " + album + " by " + artist + "<br/><br/>");
 		    out.println("<table id=\"musicList\"><tr><th>Track Number</th><th>Track</th><th>Duration</th></tr>");
 		    while(rs1.next()){
 		    trackNumber++;

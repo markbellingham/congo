@@ -78,11 +78,10 @@ public class AlbumLister extends HttpServlet {
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
-		    out.println("<br/><br/>");
 		    out.println("<table id=\"musicList\"><tr><th>Artist</th><th>Album</th><th>Number of Tracks</th><th>Price</th></tr>");
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("artist_name") + "</td>");
-			out.println("<td><a href=\"TrackLister?r_id="+rs1.getInt("recording_id") + "\">" + rs1.getString("title") + "</a></td>"); 	  
+			out.println("<td><a href=\"TrackLister?r_id="+rs1.getInt("recording_id") + "&&name=" + rs1.getString("artist_name") + "&&album="+ rs1.getString("title") + "\">" + rs1.getString("title") + "</a></td>"); 	  
 			out.println("<td> " + rs1.getString("num_tracks") + "</td>");
 			out.println("<td> " + rs1.getFloat("price") + "</td>");
 			out.println("<td><form action=\"add_to_order\" method=\"get\">" +
