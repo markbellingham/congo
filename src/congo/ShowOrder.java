@@ -53,10 +53,8 @@ public class ShowOrder extends HttpServlet {
 			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
 					" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
 			
-			float total = 0.0f;
 			float totalPerAlbum = 0.0f;
 			float grandTotal = 0.0f;
-		    int position = 0;
 			
 		    // going to check the Session for albums, need to 'get' it			
 			HttpSession session = request.getSession();
@@ -123,7 +121,6 @@ public class ShowOrder extends HttpServlet {
 				    
 				    // Find how many copies of each album are in the order
 				    int quantity = Collections.frequency(albumArray, rs1.getString("title"));
-				    position++;		// Relevant for the for-loop above
 				    totalPerAlbum = rs1.getFloat("price") * quantity;	// Get the total cost for each album
 				    grandTotal += totalPerAlbum;						// Get the total cost of all albums
 				    // Show how many of each album there are with button to update quantities
