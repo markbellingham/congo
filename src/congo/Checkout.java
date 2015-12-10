@@ -107,7 +107,7 @@ public class Checkout extends HttpServlet {
 		    out.println("<div id=\"page_title\"><h2>Checkout</h2></div>");
 		    // print out table header
 			out.println("<table id=\"musicList\">" +
-			    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th style=\"width:150px\">Quantity</th><th>Totals</th></tr>");
+			    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th>Quantity</th><th>Totals</th></tr>");
 			
 			System.out.println(albumArray);
 			// print out table rows one for each row returned in rs1
@@ -115,7 +115,7 @@ public class Checkout extends HttpServlet {
 			    out.print("<tr>");
 			    out.print("<td>" + rs1.getString("artist_name") + "</td>");
 			    out.print("<td>" + rs1.getString("title") + "</td>");
-			    out.print("<td>" + rs1.getFloat("price") + "</td>");
+			    out.print("<td>£" + rs1.getFloat("price") + "</td>");
 			    
 			    // Find how many copies of each album are in the order
 				int quantity = 0;
@@ -129,7 +129,7 @@ public class Checkout extends HttpServlet {
 			    grandTotal += totalPerAlbum;						// Get the total cost of all albums
 			    // Show how many of each album there are
 			    out.print("<td>" + quantity + "</td>");
-			    out.print("<td>" + totalPerAlbum + "</td>");
+			    out.print("<td>£" + totalPerAlbum + "</td>");
 			}
 		    }catch(SQLException e ){
 		    System.err.println(e);
@@ -137,7 +137,7 @@ public class Checkout extends HttpServlet {
 			out.println("<tr>");
 			// Print the total for all albums
 			out.print("<td colspan=\"4\"><b>Total</b></td>");
-			out.print("<td><b>" + String.format("%.2f", grandTotal) + "</b></td>");
+			out.print("<td><b>£" + String.format("%.2f", grandTotal) + "</b></td>");
 			// Close table
 			out.println("</tr></table>");
 			out.println("<br/><br/>");

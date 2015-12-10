@@ -2,7 +2,7 @@
 	clear: both;
 	position: absolute;
 	left: 870px;
-	top: 40px
+	top: 30px
 }
 
 #name {
@@ -25,6 +25,7 @@ nav {
 
 body {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	margin: 0px 0px 0px 30px;
 }
 
 #musicList {

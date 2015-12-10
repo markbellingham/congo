@@ -117,7 +117,7 @@ public class ShowOrder extends HttpServlet {
 				    out.print("<tr>");
 				    out.print("<td>" + rs1.getString("artist_name") + "</td>");
 				    out.print("<td>" + rs1.getString("title") + "</td>");
-				    out.print("<td>" + rs1.getFloat("price") + "</td>");
+				    out.print("<td>£" + rs1.getFloat("price") + "</td>");
 				    
 				    // Find how many copies of each album are in the order
 				    int quantity = Collections.frequency(albumArray, rs1.getString("title"));
@@ -127,7 +127,7 @@ public class ShowOrder extends HttpServlet {
 				    out.print("<td><form action=\"UpdateOrder\" method=\"get\">" +
 				    		 	"<input type=\"number\" name=\"quantity\" value=\"" + quantity + "\" min=\"1\" max=\"5\" style=\"width:30px\">" +				    			
 				    			"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
-				    			"<input type=\"submit\" value=\"Update\"></td></form><td>" + totalPerAlbum + "</td><td>");
+				    			"<input type=\"submit\" value=\"Update\"></td></form><td>£" + totalPerAlbum + "</td><td>");
 				    // button to remove album from the order
 				    out.print("<form action=\"RemoveAlbum\" method=\"get\">" +
 				    			"<input type=\"hidden\" name=\"name\" value=\"" + rs1.getString("title") + "\">" +
@@ -139,7 +139,7 @@ public class ShowOrder extends HttpServlet {
 				out.println("<tr>");
 				// Print the total for all albums
 				out.print("<td colspan=\"4\"><b>Total</b></td>");
-				out.print("<td><b>" + String.format("%.2f", grandTotal) + "</b></td><td></td>");
+				out.print("<td><b>£" + String.format("%.2f", grandTotal) + "</b></td><td></td>");
 				// Close table
 				out.println("</tr></table>");
 			    

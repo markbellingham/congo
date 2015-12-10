@@ -64,10 +64,10 @@ public class UpdateOrder extends HttpServlet {
 				
 				albumArray = (ArrayList<String>)session.getAttribute("myorder");
 				
-				// First remove our album from the order
+				// First remove the selected album from the order
 				albumArray.removeAll(Collections.singleton(album_name));
 				
-				// Then add our album back to the order for the required amount
+				// Then add the selected album back to the order for the required amount
 				for (int i = 0; i < quantity; i++) {
 					albumArray.add(album_name);
 				}
@@ -103,7 +103,7 @@ public class UpdateOrder extends HttpServlet {
 				    out.println("<table id=\"musicList\" <tr><th></th><th></th></tr>");
 				    out.println("<tr><td>Artist</td><td>" + rs1.getString("artist_name") + "</td></tr>");
 				    out.println("<tr><td>Album</td><td>" + rs1.getString("title") + "</td></tr>");
-				    out.println("<tr><td>Price</td><td> £" + rs1.getFloat("price") + "</td></tr>");
+				    out.println("<tr><td>Price</td><td>£" + rs1.getFloat("price") + "</td></tr>");
 				    out.println("</table>");
 				}catch(SQLException e){
 				    System.err.println(e);

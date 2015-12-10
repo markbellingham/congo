@@ -99,7 +99,7 @@ public class RemoveAlbum extends HttpServlet {
 			    out.println("<table id=\"musicList\" <tr><th></th><th></th></tr>");
 			    out.print("<tr><td>Artist</td><td>" + rs1.getString("artist_name") + "</td></tr>");
 			    out.print("<tr><td>Album</td><td>" + rs1.getString("title") + "</td></tr>");
-			    out.print("<tr><td>Price</td><td>" + rs1.getFloat("price") + "</td></tr>");	 
+			    out.print("<tr><td>Price</td><td>£" + rs1.getFloat("price") + "</td></tr>");	 
 			    out.print("</table>");
 			}catch(SQLException e){
 			    System.err.println(e);
