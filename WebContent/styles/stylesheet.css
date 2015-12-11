@@ -1,7 +1,7 @@
 #logo {
 	clear: both;
 	position: absolute;
-	left: 870px;
+	left: 960px;
 	top: 30px
 }
 
@@ -28,6 +28,10 @@ body {
 	margin: 0px 0px 0px 30px;
 }
 
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
+}
+
 #musicList {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -46,6 +50,11 @@ body {
     padding-bottom: 4px;
     background-color: #A7C942;
     color: #ffffff;
+}
+
+a.th {
+	text-decoration: none;
+	color: #ffffff;
 }
 
 #musicList tr.alt td {

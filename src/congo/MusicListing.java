@@ -37,7 +37,8 @@ public class MusicListing extends HttpServlet {
 							"<html><head>" +
 							"<meta charset=\"UTF-8\">" +
 							"<title>Congo's Music Store</title>" +
-							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\">" +
+							"<script src=\"sorttable.js\"></script></head><body>";
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();		
@@ -72,7 +73,8 @@ public class MusicListing extends HttpServlet {
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
 		    out.println("<br/><br/>");
-		    out.println("<table id=\"musicList\"><tr><th>Recording ID</th><th>Artist</th><th>Album</th><th>Category</th><th>Number of Tracks</th><th>Price</th></tr>");
+		    out.println("<table id=\"musicList\" class=\"sortable\"><tr>" +
+		    			"<th><a href=#>Recording ID</a></th><th>Artist</th><th>Album</th><th>Category</th><th>Number of Tracks</th><th>Price</th></tr>");
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("recording_id") + "</td>");
 			out.println("<td>" + rs1.getString("artist_name") + "</td>"); 	  

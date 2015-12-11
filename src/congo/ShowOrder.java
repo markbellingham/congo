@@ -40,7 +40,8 @@ public class ShowOrder extends HttpServlet {
 					"<html><head>" +
 					"<meta charset=\"UTF-8\">" +
 					"<title>Congo's Music Store</title>" +
-					"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
+					"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\">" +
+					"<script src=\"sorttable.js\"></script></head><body>";
 		
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
@@ -108,8 +109,8 @@ public class ShowOrder extends HttpServlet {
 			    
 			    out.println("<div id=\"page_title\"><h2>Current Order</h2></div>");
 			    // print out table header
-				out.println("<table id=\"musicList\">" +
-				    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th style=\"width:150px\">Quantity</th><th>Totals</th><th></th></tr>");
+				out.println("<table id=\"musicList\" class=\"sortable\">" +
+				    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th style=\"width:150px\">Quantity</th><th>Totals</th><th class=\"sorttable_nosort\"></th></tr>");
 				
 				System.out.println(albumArray);
 				// print out table rows one for each row returned in rs1
@@ -138,8 +139,8 @@ public class ShowOrder extends HttpServlet {
 			    }
 				out.println("<tr>");
 				// Print the total for all albums
-				out.print("<td colspan=\"4\"><b>Total</b></td>");
-				out.print("<td><b>£" + String.format("%.2f", grandTotal) + "</b></td><td></td>");
+				out.print("<tfoot><td colspan=\"4\"><b>Total</b></td>");
+				out.print("<td><b>£" + String.format("%.2f", grandTotal) + "</b></td><td></td></tfoot>");
 				// Close table
 				out.println("</tr></table>");
 			    

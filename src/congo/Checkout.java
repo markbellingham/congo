@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -89,7 +90,7 @@ public class Checkout extends HttpServlet {
 		}
 
 		
-		// use names stored in pizzaArray to query database
+		// use names stored in albumArray to query database
 		String selectSQL1 = "select * from music_recordings where ";
 		for ( int i = 0; i < albumArray.size(); i++){
 			// build up select statement from all albums currently ordered and stored in albumArray
@@ -118,13 +119,8 @@ public class Checkout extends HttpServlet {
 			    out.print("<td>£" + rs1.getFloat("price") + "</td>");
 			    
 			    // Find how many copies of each album are in the order
-				int quantity = 0;
-			    for (int i = 0; i < albumArray.size(); i++){
-			    	if (albumArray.get(i).equals(albumArray.get(position))) {
-			    		quantity++;
-			    	}
-			    }
-			    position++;		// Relevant for the for-loop above
+			    int quantity = Collections.frequency(albumArray, rs1.getString("title"));
+			    
 			    totalPerAlbum = rs1.getFloat("price") * quantity;	// Get the total cost for each album
 			    grandTotal += totalPerAlbum;						// Get the total cost of all albums
 			    // Show how many of each album there are
