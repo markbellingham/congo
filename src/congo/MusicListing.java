@@ -74,7 +74,8 @@ public class MusicListing extends HttpServlet {
 		    // Retrieve the results
 		    out.println("<br/><br/>");
 		    out.println("<table id=\"musicList\" class=\"sortable\"><tr>" +
-		    			"<th><a href=#>Recording ID</a></th><th>Artist</th><th>Album</th><th>Category</th><th>Number of Tracks</th><th>Price</th></tr>");
+		    			"<th><a href=# class=\"th\">Recording ID</a></th><th><a href=# class=\"th\">Artist</a></th><th><a href=# class=\"th\">Album</a></th>" +
+		    			"<th><a href=# class=\"th\">Category</a></th><th><a href=# class=\"th\">Number of Tracks</a></th><th><a href=# class=\"th\">Price</a></th></tr>");
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("recording_id") + "</td>");
 			out.println("<td>" + rs1.getString("artist_name") + "</td>"); 	  

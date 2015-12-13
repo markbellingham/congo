@@ -139,7 +139,7 @@ public class Checkout extends HttpServlet {
 			out.println("<br/><br/>");
 			
 			// print the form for the customer address
-			out.println("<form action=\"SubmitOrder\" method=\"post\">" +
+			out.println("<form action=\"SubmitOrder\" method=\"get\">" +
 						"<input type=\"text\" name=\"fname\" placeholder=\"First name\" required><br/><br/>" +
 						"<input type=\"text\" name=\"lname\" placeholder=\"Surname\" required><br/><br/>" +
 						"<input type=\"text\" name=\"address1\" placeholder=\"Address line 1\" required><br/><br/>" +

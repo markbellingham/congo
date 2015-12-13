@@ -80,7 +80,8 @@ public class PricePicker extends HttpServlet {
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    // Retrieve the results
-	    out.println("<table id=\"musicList\" class=\"sortable\"><tr><th>Artist</th><th>Album</th><th>Number of Tracks</th><th>Price</th></tr>");
+		    out.println("<table id=\"musicList\" class=\"sortable\"><tr class=\"th\"><th><a href=# class=\"th\">Artist</a></th><th><a href=# class=\"th\">Album</a></th>" +
+	    				"<th><a href=# class=\"th\">Number of Tracks</a></th><th><a href=# class=\"th\">Price</a></th></tr>");
 		    while(rs1.next()){
 			out.println("<tr><td> "+ rs1.getString("artist_name") + "</td>");
 			out.println("<td><a href=\"TrackLister?r_id="+rs1.getInt("recording_id") + "&&name=" + rs1.getString("artist_name") + "&&album="+ rs1.getString("title") + "\">" + rs1.getString("title") + "</a></td>"); 	  
