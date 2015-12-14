@@ -28,6 +28,15 @@ body {
 	margin: 0px 0px 0px 30px;
 }
 
+#login {
+	float: left;
+	margin-right: 100px;
+}
+
+#register {
+	float: left;
+}
+
 table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
     content: " \25B4\25BE" 
 }
