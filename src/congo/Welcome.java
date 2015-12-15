@@ -69,7 +69,9 @@ public class Welcome extends HttpServlet {
 		    System.err.println(e);
 		}
 		
-		out.println("Welcome");
+		String firstName = (String) session.getAttribute("firstName");
+		String lastName = (String) session.getAttribute("lastName");
+		out.println("Welcome " + firstName + " " + lastName);
 	}
 
 	/**

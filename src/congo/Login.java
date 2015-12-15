@@ -47,14 +47,6 @@ public class Login extends HttpServlet {
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter();
 		
-		/*// print the title and menu
-		out.println(docType);
-		out.println("<img id=\"logo\" src=\"images/logo.png\">");
-		out.println("<header id=\"name\">");
-		out.println("<h1>Congo's Music Store</h1></header><br/>");
-		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-				" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
-		*/
 	    // going to check the Session for albums, need to 'get' it			
 		HttpSession session = request.getSession();
 	
@@ -67,10 +59,7 @@ public class Login extends HttpServlet {
 		String email 	= request.getParameter("email");
 		String passwd 	= request.getParameter("password");
 		
-		System.out.println(email + " " + passwd);
-		
-		if (LoginDAO.validate(email, passwd)) {
-			out.print("Welcome");
+		if (LoginDAO.validate(email, passwd, request, response)) {
 			RequestDispatcher rd = request.getRequestDispatcher("Welcome");
 			rd.forward(request, response);
 		} else {

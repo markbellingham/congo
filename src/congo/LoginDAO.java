@@ -7,9 +7,10 @@ import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.http.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.*;
 
@@ -28,7 +29,7 @@ public class LoginDAO extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-    public static boolean validate(String email, String passwd) {
+    public static boolean validate(String email, String passwd, HttpServletRequest request, HttpServletResponse response) {
     	
     	boolean status = false;
     	
@@ -38,6 +39,9 @@ public class LoginDAO extends HttpServlet {
 		String password = "Lerkmant3";
 		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 		
+		//get a session
+		HttpSession session = request.getSession();
+		
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    conn = DriverManager.getConnection(url, user, password);
@@ -45,9 +49,13 @@ public class LoginDAO extends HttpServlet {
 		    java.sql.PreparedStatement ps = conn.prepareStatement("select * from congo_customers where email = '" + email + "' and password = '" + passwd + "'");
 		    
 		    ResultSet rs = ps.executeQuery();
-
-		    status = rs.next();
-		    System.out.println(rs.next());
+		    
+		    if (rs.next()) {
+		    	status = true;
+		    	session.setAttribute("custid", rs.getString("custid"));
+		    	session.setAttribute("firstName", rs.getString("fname"));
+		    	session.setAttribute("lastName", rs.getString("lname"));
+		    }
 		    
 		} catch(Exception e) {
 		    System.err.println(e);

@@ -90,12 +90,12 @@ public class ArtistFinder extends HttpServlet {
 					out.println("<td>£" + rs1.getFloat("price") + "</td>");
 					if (rs1.getInt("stock_count") > 0) {
 						out.println("<td><form action=\"add_to_order\" method=\"get\">" +
-								"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
-								"<input type=\"submit\" value=\"Add\" >" + "</form>");				
+									"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
+									"<input type=\"submit\" value=\"Add\" >" + "</form>");				
 					} else {
 						out.println("<td><form action=\"add_to_order\" method=\"get\">" +
-								"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
-								"<input type=\"submit\" value=\"Add\" disabled>" + "</form>");
+									"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
+									"<input type=\"submit\" value=\"Add\" disabled>" + "</form>");
 					}
 					out.println("</tr>");			
 				    }while(rs1.next());
