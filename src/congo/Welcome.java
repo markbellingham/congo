@@ -52,15 +52,13 @@ public class Welcome extends HttpServlet {
 		HttpSession session = request.getSession();
 	
 		// albumArray is an array of the album names in our order
-		ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");
-		
+		ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");		
 
 		Connection conn = null; // Create connection object
 		String database = "bellingm"; // Name of database
 		String user = "bellingm"; // 
 		String password = "Lerkmant3";
-		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
-		
+		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;		
 
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -69,9 +67,9 @@ public class Welcome extends HttpServlet {
 		    System.err.println(e);
 		}
 		
-		String firstName = (String) session.getAttribute("firstName");
-		String lastName = (String) session.getAttribute("lastName");
-		out.println("Welcome " + firstName + " " + lastName);
+		String fname = (String) session.getAttribute("fname");
+		String lname = (String) session.getAttribute("lname");
+		out.println("Welcome " + fname + " " + lname);
 	}
 
 	/**

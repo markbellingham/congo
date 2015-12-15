@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class albumLister
@@ -48,6 +49,9 @@ public class AlbumLister extends HttpServlet {
 
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter();
+		
+	    // going to check the Session for albums, need to 'get' it			
+		HttpSession session = request.getSession();
 		
 		String category = request.getParameter("category");
 		
@@ -86,7 +90,7 @@ public class AlbumLister extends HttpServlet {
 			out.println("<td><a href=\"TrackLister?r_id="+rs1.getInt("recording_id") + "&&name=" + rs1.getString("artist_name") + "&&album="+ rs1.getString("title") + "\">" + rs1.getString("title") + "</a></td>"); 	  
 			out.println("<td>" + rs1.getString("num_tracks") + "</td>");
 			out.println("<td>£" + rs1.getFloat("price") + "</td>");
-			if (rs1.getInt("stock_count") > 0) {
+			if (rs1.getInt("stock_count") > 0 && session.getAttribute("custid") != null) {
 				out.println("<td><form action=\"add_to_order\" method=\"get\">" +
 						"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
 						"<input type=\"submit\" value=\"Add\" >" + "</form>");				
