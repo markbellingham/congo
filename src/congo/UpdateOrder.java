@@ -45,20 +45,25 @@ public class UpdateOrder extends HttpServlet {
 				response.setContentType("text/html"); 
 				PrintWriter out = response.getWriter();
 				
+				// get a session
+				HttpSession session = request.getSession();
+				
 				// find out the album name and quantity passed in
 				String album_name = request.getParameter("title");
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
 				
 				// print the title and menu
 				out.println(docType);
+				if (session.getAttribute("custid") == null) {
+					out.print("You are not logged in");
+				} else {
+					out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+				}
 				out.println("<img id=\"logo\" src=\"images/logo.png\">");
 				out.println("<header id=\"name\">");
 				out.println("<h1>Congo's Music Store</h1></header><br/>");
 				out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
 						" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
-				
-				// get a session
-				HttpSession session = request.getSession();
 				
 				ArrayList<String> albumArray;  // albumArray is list of the albums in our order
 				

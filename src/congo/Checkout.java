@@ -45,8 +45,16 @@ public class Checkout extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
+	    // going to check the Session for albums, need to 'get' it			
+		HttpSession session = request.getSession();
+		
 		// print the title and menu
 		out.println(docType);
+		if (session.getAttribute("custid") == null) {
+			out.print("You are not logged in");
+		} else {
+			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+		}
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
@@ -58,9 +66,6 @@ public class Checkout extends HttpServlet {
 		float grandTotal = 0.0f;
 	    int position = 0;
 		
-	    // going to check the Session for albums, need to 'get' it			
-		HttpSession session = request.getSession();
-	
 		// albumArray is an array of the album names in our order
 		ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");
 		

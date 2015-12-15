@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class TrackLister
@@ -48,6 +49,9 @@ public class TrackLister extends HttpServlet {
 		response.setContentType("text/html"); 
 		PrintWriter out = response.getWriter();
 		
+		// get a session
+		HttpSession session = request.getSession() ;
+		
 		String recording_id = request.getParameter("r_id");
 		String artist = request.getParameter("name");
 		String album = request.getParameter("album");
@@ -55,6 +59,11 @@ public class TrackLister extends HttpServlet {
 		
 		// print the title and menu
 		out.println(docType);
+		if (session.getAttribute("custid") == null) {
+			out.print("You are not logged in");
+		} else {
+			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+		}
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
