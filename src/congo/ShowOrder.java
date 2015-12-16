@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,13 +50,20 @@ public class ShowOrder extends HttpServlet {
 		    // going to check the Session for albums, need to 'get' it			
 			HttpSession session = request.getSession();
 			
+			if (session.getAttribute("justOnce") == null) {
+				session.setAttribute("justOnce", true);
+				response.sendRedirect("show_my_order");
+			}
+			
 			// print the title and menu
 			out.println(docType);
 			if (session.getAttribute("custid") == null) {
 				out.print("You are not logged in");
+				response.sendRedirect("login.html");
 			} else {
 				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			}
+			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			out.println("<img id=\"logo\" src=\"images/logo.png\">");
 			out.println("<header id=\"name\">");
 			out.println("<h1>Congo's Music Store</h1></header><br/>");
@@ -68,7 +76,7 @@ public class ShowOrder extends HttpServlet {
 			// albumArray is an array of the album names in our order
 			ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");
 			
-			//Check to see if we got here without choosing a album, if we did session is 'new'			
+			/*Check to see if we got here without choosing a album, if we did session is 'new'			
 			if ( albumArray == null ){
 				// create a list to hold order
 			    albumArray = new ArrayList<String>();
@@ -78,7 +86,7 @@ public class ShowOrder extends HttpServlet {
 			}else{
 				//get the current list of albums ordered
 			    albumArray = (ArrayList<String>)session.getAttribute("myorder");
-			}
+			}*/
 
 			
 			

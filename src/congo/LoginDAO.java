@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +40,8 @@ public class LoginDAO extends HttpServlet {
 		String password = "Lerkmant3";
 		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 		
+		ArrayList<String> albumArray = new ArrayList<String>();  // albumArray is list of the albums in our order
+		
 		//get a session
 		HttpSession session = request.getSession();
 		
@@ -55,6 +58,7 @@ public class LoginDAO extends HttpServlet {
 		    	session.setAttribute("custid", 		rs.getString("custid"));
 		    	session.setAttribute("fname", 	rs.getString("fname"));
 		    	session.setAttribute("lname", 	rs.getString("lname"));
+		    	session.setAttribute("myorder",albumArray); //add array to session 
 		    }
 		    
 		} catch(Exception e) {

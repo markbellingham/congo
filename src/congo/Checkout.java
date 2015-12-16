@@ -52,6 +52,7 @@ public class Checkout extends HttpServlet {
 		out.println(docType);
 		if (session.getAttribute("custid") == null) {
 			out.print("You are not logged in");
+			response.sendRedirect("login.html");
 		} else {
 			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 		}
@@ -143,7 +144,7 @@ public class Checkout extends HttpServlet {
 			out.println("</tr></table>");
 			out.println("<br/><br/>");
 			
-			// print the form for the customer address
+			/* print the form for the customer address
 			out.println("<form action=\"SubmitOrder\" method=\"get\">" +
 						"<input type=\"text\" name=\"fname\" placeholder=\"First name\" required><br/><br/>" +
 						"<input type=\"text\" name=\"lname\" placeholder=\"Surname\" required><br/><br/>" +
@@ -156,7 +157,7 @@ public class Checkout extends HttpServlet {
 						"<input type=\"checkbox\" name=\"mailList\">" +
 						"Check this if you want to be entered into our mailing list<br/><br/>" +						
 						"<input type=\"submit\" value=\"Submit\">" +
-						"</form>");
+						"</form>");*/
 		    
 			out.println("<p><a href=\"index.html\">Go Home<a>");
 			out.println("</body></html>");
