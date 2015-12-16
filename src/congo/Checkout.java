@@ -62,10 +62,8 @@ public class Checkout extends HttpServlet {
 		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
 				" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
 		
-		float total = 0.0f;
 		float totalPerAlbum = 0.0f;
 		float grandTotal = 0.0f;
-	    int position = 0;
 		
 		// albumArray is an array of the album names in our order
 		ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");
@@ -103,7 +101,7 @@ public class Checkout extends HttpServlet {
 		    if (i != 0){
 			selectSQL1 += " OR ";
 		    }
-		    selectSQL1 += "title = '" + albumArray.get(i) + "'";
+		    selectSQL1 += "recording_id = '" + albumArray.get(i) + "'";
 		}
 		
 		try{
@@ -125,7 +123,7 @@ public class Checkout extends HttpServlet {
 			    out.print("<td>£" + rs1.getFloat("price") + "</td>");
 			    
 			    // Find how many copies of each album are in the order
-			    int quantity = Collections.frequency(albumArray, rs1.getString("title"));
+			    int quantity = Collections.frequency(albumArray, rs1.getString("recording_id"));
 			    
 			    totalPerAlbum = rs1.getFloat("price") * quantity;	// Get the total cost for each album
 			    grandTotal += totalPerAlbum;						// Get the total cost of all albums
