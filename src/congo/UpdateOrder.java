@@ -49,7 +49,7 @@ public class UpdateOrder extends HttpServlet {
 				HttpSession session = request.getSession();
 				
 				// find out the album name and quantity passed in
-				String album_name = request.getParameter("title");
+				String r_id = request.getParameter("r_id");
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
 				
 				// print the title and menu
@@ -70,11 +70,11 @@ public class UpdateOrder extends HttpServlet {
 				albumArray = (ArrayList<String>)session.getAttribute("myorder");
 				
 				// First remove the selected album from the order
-				albumArray.removeAll(Collections.singleton(album_name));
+				albumArray.removeAll(Collections.singleton(r_id));
 				
 				// Then add the selected album back to the order for the required amount
 				for (int i = 0; i < quantity; i++) {
-					albumArray.add(album_name);
+					albumArray.add(r_id);
 				}
 				
 				// update the session with the latest info from albumArray
@@ -98,7 +98,7 @@ public class UpdateOrder extends HttpServlet {
 				// connecting to database
 				try{
 				    conn = DriverManager.getConnection(url, user, password);
-				    String selectSQL = "select * from music_recordings where title ='" + album_name + "'";
+				    String selectSQL = "select * from music_recordings where recording_id ='" + Integer.parseInt(r_id) + "'";
 				    System.err.println("DEBUG: Query: " + selectSQL);
 				    Statement stmt = conn.createStatement();
 				    ResultSet rs1 = stmt.executeQuery(selectSQL);

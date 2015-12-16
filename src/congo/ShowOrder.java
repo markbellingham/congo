@@ -112,7 +112,7 @@ public class ShowOrder extends HttpServlet {
 			    if (i != 0){
 				selectSQL1 += " OR ";
 			    }
-			    selectSQL1 += "title = '" + albumArray.get(i) + "'";
+			    selectSQL1 += "recording_id = '" + albumArray.get(i) + "'";
 			}
 			
 			try{
@@ -134,17 +134,17 @@ public class ShowOrder extends HttpServlet {
 				    out.print("<td>£" + rs1.getFloat("price") + "</td>");
 				    
 				    // Find how many copies of each album are in the order
-				    int quantity = Collections.frequency(albumArray, rs1.getString("title"));
+				    int quantity = Collections.frequency(albumArray, rs1.getString("recording_id"));
 				    totalPerAlbum = rs1.getFloat("price") * quantity;	// Get the total cost for each album
 				    grandTotal += totalPerAlbum;						// Get the total cost of all albums
 				    // Show how many of each album there are with button to update quantities
 				    out.print("<td><form action=\"UpdateOrder\" method=\"get\">" +
 				    		 	"<input type=\"number\" name=\"quantity\" value=\"" + quantity + "\" min=\"1\" max=\"5\" style=\"width:30px\">" +				    			
-				    			"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
+				    			"<input type=\"hidden\" name=\"r_id\" value=\"" + rs1.getString("recording_id") + "\">" +
 				    			"<input type=\"submit\" value=\"Update\"></td></form><td>£" + totalPerAlbum + "</td><td>");
 				    // button to remove album from the order
 				    out.print("<form action=\"RemoveAlbum\" method=\"get\">" +
-				    			"<input type=\"hidden\" name=\"name\" value=\"" + rs1.getString("title") + "\">" +
+				    			"<input type=\"hidden\" name=\"r_id\" value=\"" + rs1.getString("recording_id") + "\">" +
 						      	"<input type=\"submit\" value=\"Delete\"></td></form>");
 				}
 			    }catch(SQLException e ){

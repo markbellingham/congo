@@ -49,7 +49,7 @@ public class RemoveAlbum extends HttpServlet {
 			HttpSession session = request.getSession() ;
 
 			// find out the album name passed in from ShowOrder
-			String album_name = request.getParameter("name");
+			String r_id = request.getParameter("r_id");
 			
 			// print the title and menu
 			out.println(docType);
@@ -70,7 +70,7 @@ public class RemoveAlbum extends HttpServlet {
 			
 			System.out.println(albumArray.size());
 			// remove all instances of the selected album from the order
-			albumArray.removeAll(Collections.singleton(album_name));
+			albumArray.removeAll(Collections.singleton(r_id));
 			
 			// Set the session to the updated version of albumArray
 			session.setAttribute("myorder", albumArray);
@@ -93,7 +93,7 @@ public class RemoveAlbum extends HttpServlet {
 			// connecting to database
 			try{
 			    conn = DriverManager.getConnection(url, user, password);
-			    String selectSQL = "select * from music_recordings where title ='" + album_name + "'";
+			    String selectSQL = "select * from music_recordings where recording_id ='" + r_id + "'";
 			    System.err.println("DEBUG: Query: " + selectSQL);	// to help find errors in the SQL statement - only printed to console
 			    Statement stmt = conn.createStatement();
 			    ResultSet rs1 = stmt.executeQuery(selectSQL);		// Create a result set with the data returned by the SQL statement

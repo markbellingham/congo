@@ -97,12 +97,10 @@ public class AlbumLister extends HttpServlet {
 			out.println("<td>£" + rs1.getFloat("price") + "</td>");
 			if (rs1.getInt("stock_count") > 0 && session.getAttribute("custid") != null) {
 				out.println("<td><form action=\"add_to_order\" method=\"get\">" +
-						"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
-						"<input type=\"submit\" value=\"Add\" >" + "</form>");				
+						"<input type=\"hidden\" name=\"r_id\" value=\"" + rs1.getInt("recording_id") + "\">" +
+						"<input type=\"submit\" value=\"Add\" >" + "</form></td>");				
 			} else {
-				out.println("<td><form action=\"add_to_order\" method=\"get\">" +
-						"<input type=\"hidden\" name=\"title\" value=\"" + rs1.getString("title") + "\">" +
-						"<input type=\"submit\" value=\"Add\" disabled>" + "</form>");
+				out.println("<td><form><input type=\"submit\" value=\"Add\" disabled>" + "</form></td>");
 			}
 
 			out.println("</tr>");

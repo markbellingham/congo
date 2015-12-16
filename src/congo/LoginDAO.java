@@ -55,7 +55,7 @@ public class LoginDAO extends HttpServlet {
 		    
 		    if (rs.next()) {
 		    	status = true;
-		    	session.setAttribute("custid", 		rs.getString("custid"));
+		    	session.setAttribute("custid", 	rs.getString("custid"));
 		    	session.setAttribute("fname", 	rs.getString("fname"));
 		    	session.setAttribute("lname", 	rs.getString("lname"));
 		    	session.setAttribute("myorder",albumArray); //add array to session 

@@ -41,7 +41,7 @@ public class AddToOrder extends HttpServlet {
 			HttpSession session = request.getSession();
 
 			// find out the album name passed in
-			String album_name = request.getParameter("title");
+			int r_id = Integer.parseInt(request.getParameter("r_id"));
 			
 			// print the title and menu
 			out.println(docType);
@@ -69,7 +69,7 @@ public class AddToOrder extends HttpServlet {
 			}
 			
 			// add our album to the order
-			albumArray.add(album_name);
+			albumArray.add(r_id);
 				session.setAttribute("myorder", albumArray);
 				
 			// Might as well display the album details
@@ -91,7 +91,7 @@ public class AddToOrder extends HttpServlet {
 			// connecting to database
 			try{
 			    conn = DriverManager.getConnection(url, user, password);
-			    String selectSQL = "select * from music_recordings where title ='" + album_name + "'";
+			    String selectSQL = "select * from music_recordings where recording_id ='" + r_id + "'";
 			    System.err.println("DEBUG: Query: " + selectSQL);
 			    Statement stmt = conn.createStatement();
 			    ResultSet rs1 = stmt.executeQuery(selectSQL);
