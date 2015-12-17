@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 import javax.servlet.ServletException;
@@ -53,14 +54,15 @@ public class Checkout extends HttpServlet {
 		if (session.getAttribute("custid") == null) {
 			out.print("You are not logged in");
 			response.sendRedirect("login.html");
+			return;
 		} else {
 			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 		}
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
-		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-				" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
+		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a>" +
+				" | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 		
 		float totalPerAlbum = 0.0f;
 		float grandTotal = 0.0f;
@@ -77,7 +79,8 @@ public class Checkout extends HttpServlet {
 		    albumArray = (ArrayList<String>)session.getAttribute("myorder");
 		}
 
-		
+		// Create a new arrayList to store the final order for submission
+		ArrayList<Integer[]> orderArray = new ArrayList<Integer[]>();
 		
 		Connection conn = null; // Create connection object
 		String database = "bellingm"; // Name of database
@@ -130,6 +133,9 @@ public class Checkout extends HttpServlet {
 			    // Show how many of each album there are
 			    out.print("<td>" + quantity + "</td>");
 			    out.print("<td>£" + totalPerAlbum + "</td>");
+			    // Create arrayList containing the final order 
+			    Integer array[] = {rs1.getInt("recording_id"), quantity};
+			    orderArray.add(array);
 			}
 		    }catch(SQLException e ){
 		    System.err.println(e);
@@ -141,24 +147,13 @@ public class Checkout extends HttpServlet {
 			// Close table
 			out.println("</tr></table>");
 			out.println("<br/><br/>");
-			
-			/* print the form for the customer address
 			out.println("<form action=\"SubmitOrder\" method=\"get\">" +
-						"<input type=\"text\" name=\"fname\" placeholder=\"First name\" required><br/><br/>" +
-						"<input type=\"text\" name=\"lname\" placeholder=\"Surname\" required><br/><br/>" +
-						"<input type=\"text\" name=\"address1\" placeholder=\"Address line 1\" required><br/><br/>" +
-						"<input type=\"text\" name=\"address2\" placeholder=\"Address line 2\"><br/><br/>" +
-						"<input type=\"text\" name=\"city\" placeholder=\"Town or city\" required><br/><br/>" +
-						"<input type=\"text\" name=\"postcode\" placeholder=\"Postcode\" required><br/><br/>" +
-						"<input type=\"text\" name=\"phone\" placeholder=\"Telephone number\" required><br/><br/>" +
-						"<input type=\"email\" name=\"email\" placeholder=\"Email address\" required><br/><br/>" +
-						"<input type=\"checkbox\" name=\"mailList\">" +
-						"Check this if you want to be entered into our mailing list<br/><br/>" +						
-						"<input type=\"submit\" value=\"Submit\">" +
-						"</form>");*/
-		    
+						"<input type=\"submit\" value=\"Submit\"></form>");
+			
 			out.println("<p><a href=\"index.html\">Go Home<a>");
 			out.println("</body></html>");
+			
+			session.setAttribute("myFinalOrder", orderArray);
 	}
 
 	/**

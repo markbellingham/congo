@@ -45,8 +45,8 @@ public class Welcome extends HttpServlet {
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
-		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-				" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
+		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a>" +
+				" | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 		
 	    // going to check the Session for albums, need to 'get' it			
 		HttpSession session = request.getSession();

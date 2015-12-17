@@ -37,18 +37,19 @@ public class ShowOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		
+	    // going to check the Session for albums, need to 'get' it			
+		HttpSession session = request.getSession();
+		
 			String docType = "<!DOCTYPE HTML >" +
 					"<html><head>" +
 					"<meta charset=\"UTF-8\">" +
 					"<title>Congo's Music Store</title>" +
 					"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\">" +
-					"<script src=\"sorttable.js\"></script></head><body>";
-		
+					"<script src=\"sorttable.js\"></script></head><body>";		
 			response.setContentType("text/html");
-			PrintWriter out = response.getWriter();
-			
-		    // going to check the Session for albums, need to 'get' it			
-			HttpSession session = request.getSession();
 			
 			if (session.getAttribute("justOnce") == null) {
 				session.setAttribute("justOnce", true);
@@ -57,18 +58,18 @@ public class ShowOrder extends HttpServlet {
 			
 			// print the title and menu
 			out.println(docType);
-			if (session.getAttribute("custid") == null) {
-				out.print("You are not logged in");
-				response.sendRedirect("login.html");
-			} else {
-				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
-			}
 			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			out.println("<img id=\"logo\" src=\"images/logo.png\">");
 			out.println("<header id=\"name\">");
 			out.println("<h1>Congo's Music Store</h1></header><br/>");
-			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a>" +
-					" | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a></nav><br /><br />");
+			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a>" +
+					" | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
+			
+			if (session.getAttribute("custid") == null) {
+				out.print("Oops, something went wrong. Please click <a href=\"index.html\">here to go home</a>");
+			} else {
+				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+			}
 			
 			float totalPerAlbum = 0.0f;
 			float grandTotal = 0.0f;
@@ -76,7 +77,7 @@ public class ShowOrder extends HttpServlet {
 			// albumArray is an array of the album names in our order
 			ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");
 			
-			/*Check to see if we got here without choosing a album, if we did session is 'new'			
+			//Check to see if we got here without choosing a album, if we did session is 'new'			
 			if ( albumArray == null ){
 				// create a list to hold order
 			    albumArray = new ArrayList<String>();
@@ -86,7 +87,7 @@ public class ShowOrder extends HttpServlet {
 			}else{
 				//get the current list of albums ordered
 			    albumArray = (ArrayList<String>)session.getAttribute("myorder");
-			}*/
+			}
 
 			
 			
@@ -105,7 +106,7 @@ public class ShowOrder extends HttpServlet {
 			}
 
 			
-			// use names stored in pizzaArray to query database
+			// use names stored in albumArray to query database
 			String selectSQL1 = "select * from music_recordings where ";
 			for ( int i = 0; i < albumArray.size(); i++){
 				// build up select statement from all albums currently ordered and stored in albumArray
@@ -123,7 +124,7 @@ public class ShowOrder extends HttpServlet {
 			    out.println("<div id=\"page_title\"><h2>Current Order</h2></div>");
 			    // print out table header
 				out.println("<table id=\"musicList\" class=\"sortable\">" +
-				    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th style=\"width:150px\">Quantity</th><th>Totals</th><th class=\"sorttable_nosort\"></th></tr>");
+				    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th>Quantity</th><th>Totals</th><th class=\"sorttable_nosort\"></th></tr>");
 				
 				System.out.println(albumArray);
 				// print out table rows one for each row returned in rs1
