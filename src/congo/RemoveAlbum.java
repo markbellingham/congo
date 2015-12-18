@@ -61,8 +61,8 @@ public class RemoveAlbum extends HttpServlet {
 			out.println("<img id=\"logo\" src=\"images/logo.png\">");
 			out.println("<header id=\"name\">");
 			out.println("<h1>Congo's Music Store</h1></header><br/>");
-			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a>" +
-					" | <a href=\"artist.html\">Artist Finder</a> | <a href=\"show_my_order\">Show Order</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
+			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a>" +
+					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 			
 			ArrayList<String> albumArray;  // albumArray is list of the albums on our order
 			
