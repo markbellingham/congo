@@ -66,7 +66,7 @@ public class ShowOrder extends HttpServlet {
 					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 			
 			if (session.getAttribute("custid") == null) {
-				out.print("Oops, something went wrong. Please click <a href=\"index.html\">here to go home</a>");
+				request.getRequestDispatcher("login.html").forward(request,response);
 			} else {
 				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			}

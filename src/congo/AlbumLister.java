@@ -53,15 +53,17 @@ public class AlbumLister extends HttpServlet {
 	    // going to check the Session for albums, need to 'get' it			
 		HttpSession session = request.getSession();
 		
+		if (session.getAttribute("custid") == null) {
+			out.print("You are not logged in");
+			response.sendRedirect("login.html");
+		} else {
+			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+		}
+		
 		String category = request.getParameter("category");
 		
 		// print the title and menu
 		out.println(docType);
-		if (session.getAttribute("custid") == null) {
-			out.print("You are not logged in");
-		} else {
-			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
-		}
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");

@@ -40,8 +40,13 @@ public class ShowAllCustOrders extends HttpServlet {
 	    // going to check the Session for albums, need to 'get' it			
 		HttpSession session = request.getSession();
 		
+		int custid = 0;
+		
 		if (session.getAttribute("custid") == null) {
-			response.sendRedirect("login.html");
+			request.getRequestDispatcher("login.html").forward(request,response);
+		} else {
+			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+			custid = Integer.parseInt((String) session.getAttribute("custid"));
 		}
 		
 			String docType = "<!DOCTYPE HTML >" +
@@ -50,7 +55,7 @@ public class ShowAllCustOrders extends HttpServlet {
 					"<title>Congo's Music Store</title>" +
 					"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\">" +
 					"<script src=\"sorttable.js\"></script></head><body>";		
-			response.setContentType("text/html");
+					response.setContentType("text/html");
 			
 			// print the title and menu
 			out.println(docType);
@@ -60,13 +65,6 @@ public class ShowAllCustOrders extends HttpServlet {
 			out.println("<h1>Congo's Music Store</h1></header><br/>");
 			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a>" +
 					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
-			
-			if (session.getAttribute("custid") == null) {
-				out.print("Oops, something went wrong. Please click <a href=\"index.html\">here to go home</a>");
-				response.sendRedirect("index.html");
-			} else {
-				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
-			}
 			
 			Connection conn = null; // Create connection object
 			String database = "bellingm"; // Name of database
@@ -83,7 +81,6 @@ public class ShowAllCustOrders extends HttpServlet {
 			}
 			
 			// Get all the customer's orders
-			int custid = Integer.parseInt((String) session.getAttribute("custid"));
 			String selectSQL1 = "select * from congo_orders o, congo_order_details d, music_recordings r " + 
 								"where o.custid = " + custid + " and o.orderid = d.orderid and d.recording_id = r.recording_id";
 			

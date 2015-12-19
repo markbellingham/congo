@@ -46,7 +46,7 @@ public class AddToOrder extends HttpServlet {
 			// print the title and menu
 			out.println(docType);
 			if (session.getAttribute("custid") == null) {
-				out.print("You are not logged in");
+				request.getRequestDispatcher("login.html").forward(request,response);
 			} else {
 				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			}

@@ -67,9 +67,13 @@ public class Welcome extends HttpServlet {
 		    System.err.println(e);
 		}
 		
-		String fname = (String) session.getAttribute("fname");
-		String lname = (String) session.getAttribute("lname");
-		out.println("Welcome " + fname + " " + lname);
+		if (session.getAttribute("custid") == null) {
+			out.print("You are not logged in");
+			response.sendRedirect("login.html");
+			return;
+		} else {
+			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+		}
 	}
 
 	/**
