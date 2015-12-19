@@ -1,3 +1,8 @@
+/**
+ * Mark Bellingham - 14032098
+ * Web and Mobile Development assignment 2015
+ */
+
 package congo;
 
 import java.io.IOException;
@@ -50,15 +55,16 @@ public class Login extends HttpServlet {
 	    // going to check the Session for albums, need to 'get' it			
 		HttpSession session = request.getSession();
 	
-		Connection conn = null; // Create connection object
-		String database = "bellingm"; // Name of database
-		String user 	= "bellingm"; // 
+		Connection conn = null;			// Create connection object
+		String database = "bellingm";	// Name of database
+		String user 	= "bellingm"; 
 		String password = "Lerkmant3";
 		String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 		
 		String email 	= request.getParameter("email");
 		String passwd 	= request.getParameter("password");
 		
+		// Use LoginDAO to check if the user information is correct
 		if (LoginDAO.validate(email, passwd, request, response)) {
 			RequestDispatcher rd = request.getRequestDispatcher("Welcome");
 			rd.forward(request, response);

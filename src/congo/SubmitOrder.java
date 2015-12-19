@@ -1,3 +1,8 @@
+/**
+ * Mark Bellingham - 14032098
+ * Web and Mobile Development assignment 2015
+ */
+
 package congo;
 
 import java.io.IOException;
@@ -35,34 +40,45 @@ public class SubmitOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Connection information			
+		Connection conn = null; 						// Create connection object
+		String database = "bellingm"; 					// Name of database
+		String user 	= "bellingm";
+		String password = "Lerkmant3";
+		String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
+		
+		// Create string with the HTML header information
 		String docType = 	"<!DOCTYPE HTML >" +
-				"<html><head>" +
-				"<meta charset=\"UTF-8\">" +
-				"<title>Congo's Music Store</title>" +
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
+							"<html><head>" +
+							"<meta charset=\"UTF-8\">" +
+							"<title>Congo's Music Store</title>" +
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\">" +
+							"<script src=\"sorttable.js\"></script></head><body>";
 		response.setContentType("text/html"); 
-		PrintWriter out = response.getWriter();
 		
-	    // going to check the Session for albums, need to 'get' it			
-		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();			// Initialise the printwriter for outputting to the browser			
+		HttpSession session = request.getSession();		// Get a session
 		
-		// print the title and menu
-		out.println(docType);
 		if (session.getAttribute("custid") == null) {
-			out.print("You are not logged in");
-			response.sendRedirect("login.html");
+			// If the user somehow got to this page without being logged in, redirect them
+			request.getRequestDispatcher("login.html").forward(request,response);
 		} else {
+			// Otherwise welcome them by name and get their id
 			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 		}
+		
+		// Print the title, headers and menu
+		out.println(docType);
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
 		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a>" +
-				" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
+					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 		
 		// albumArray is an array of the album names in our order
 		ArrayList<Integer[]> orderArray = (ArrayList<Integer[]>)session.getAttribute("myFinalOrder");
 		
+		// Get the customer ID to insert into the database
 		int custid = Integer.parseInt((String) session.getAttribute("custid"));
 		
 		//Check to see if we got here without choosing a album, if we did session is 'new'			
@@ -74,13 +90,6 @@ public class SubmitOrder extends HttpServlet {
 		    orderArray = (ArrayList<Integer[]>)session.getAttribute("myFinalOrder");
 		}
 		
-		Connection conn = null; // Create connection object
-		String database = "bellingm"; // Name of database
-		String user = "bellingm"; // 
-		String password = "Lerkmant3";
-		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
-		
-
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    conn = DriverManager.getConnection(url, user, password);
@@ -88,9 +97,11 @@ public class SubmitOrder extends HttpServlet {
 		    System.err.println(e);
 		}
 		
+		// Create statement for inserting the order into the database
 		String insertSQL1 = "insert into congo_orders (custid, order_date) values (?,?)";
 		int orderid = 0;
 		try {
+			// Set values in the insert statement and ask for the auto-generated orderid key to be returned
 			java.sql.PreparedStatement pst2 = conn.prepareStatement(insertSQL1, PreparedStatement.RETURN_GENERATED_KEYS);
 			pst2.setInt(1, custid);
 			pst2.setDate(2, getCurrentDate());
@@ -112,6 +123,7 @@ public class SubmitOrder extends HttpServlet {
 		
 		for ( int i = 0; i < orderArray.size(); i++){
 		    try {
+		    	// Insert into the second table, each album bought with references to the orderid from the first table
 		    	int r_id 		= orderArray.get(i)[0];
 		    	int quantity 	= orderArray.get(i)[1];
 				String insertSQL2 = "insert into congo_order_details values (" + orderid + ", " + r_id + ", " + quantity + ")";

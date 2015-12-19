@@ -32,33 +32,45 @@ public class Welcome extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String docType = 	"<!DOCTYPE HTML >" +
-				"<html><head>" +
-				"<meta charset=\"UTF-8\">" +
-				"<title>Congo's Music Store</title>" +
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
-		response.setContentType("text/html"); 
-		PrintWriter out = response.getWriter();
+		// Connection information			
+		Connection conn = null; 						// Create connection object
+		String database = "bellingm"; 					// Name of database
+		String user 	= "bellingm";
+		String password = "Lerkmant3";
+		String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 		
-		// print the title and menu
+		// Create string with the HTML header information
+		String docType = 	"<!DOCTYPE HTML >" +
+							"<html><head>" +
+							"<meta charset=\"UTF-8\">" +
+							"<title>Congo's Music Store</title>" +
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\">" +
+							"<script src=\"sorttable.js\"></script></head><body>";
+		response.setContentType("text/html");
+		
+		PrintWriter out = response.getWriter();			// Initialise the printwriter for outputting to the browser			
+		HttpSession session = request.getSession();		// Get a session
+		
+		int custid = 0;
+		if (session.getAttribute("custid") == null) {
+			// If the user somehow got to this page without being logged in, redirect them
+			request.getRequestDispatcher("login.html").forward(request,response);
+		} else {
+			// Otherwise welcome them by name and get their id
+			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
+			custid = Integer.parseInt((String) session.getAttribute("custid"));
+		}
+		
+		// Print the title, headers and menu
 		out.println(docType);
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
 		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a>" +
-				" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
+					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 		
-	    // going to check the Session for albums, need to 'get' it			
-		HttpSession session = request.getSession();
-	
 		// albumArray is an array of the album names in our order
 		ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");		
-
-		Connection conn = null; // Create connection object
-		String database = "bellingm"; // Name of database
-		String user = "bellingm"; // 
-		String password = "Lerkmant3";
-		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;		
 
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -67,13 +79,6 @@ public class Welcome extends HttpServlet {
 		    System.err.println(e);
 		}
 		
-		if (session.getAttribute("custid") == null) {
-			out.print("You are not logged in");
-			response.sendRedirect("login.html");
-			return;
-		} else {
-			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
-		}
 	}
 
 	/**

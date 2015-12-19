@@ -1,3 +1,8 @@
+/**
+ * Mark Bellingham - 14032098
+ * Web and Mobile Development assignment 2015
+ */
+
 package congo;
 
 import java.io.*;
@@ -29,57 +34,56 @@ public class AddToOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String docType = 	"<!DOCTYPE HTML >" +
+		// Create string with the HTML header information
+		String docType 	= 	"<!DOCTYPE HTML >" +
 							"<html><head>" +
 							"<meta charset=\"UTF-8\">" +
 							"<title>Congo's Music Store</title>" +
 							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
-			response.setContentType("text/html"); 
-			PrintWriter out = response.getWriter();
+			response.setContentType("text/html");
 			
-			//get a session
-			HttpSession session = request.getSession();
+			PrintWriter out = response.getWriter();			// Initialise the printwriter for outputting to the browser			
+			HttpSession session = request.getSession();		// Get a session
 
-			// find out the album name passed in
-			String r_id = request.getParameter("r_id");
-			
-			// print the title and menu
-			out.println(docType);
-			if (session.getAttribute("custid") == null) {
+			if (session.getAttribute("custid") == null) {	
+				// Redirect if the user somehow reaches this page without being logged in
 				request.getRequestDispatcher("login.html").forward(request,response);
 			} else {
+				// If they are logged in, welcome them by name
 				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			}
+			
+			String r_id = request.getParameter("r_id");		// Find out the recording ID passed in
+			
+			// Print the title, headers and menu
+			out.println(docType);
 			out.println("<img id=\"logo\" src=\"images/logo.png\">");
 			out.println("<header id=\"name\">");
 			out.println("<h1>Congo's Music Store</h1></header><br/>");
 			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a>" +
 					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 			
-			ArrayList<String> albumArray;  // albumArray is list of the albums in our order
+			ArrayList<String> albumArray;  					// albumArray is list of the albums in our order
 			
-			//Check to see if this is a new order
+			// Check to see if this is a new order
 			if ( session.isNew() ){
 			    // new order(session) so create a new ArrayList
 			    albumArray = new ArrayList<String>();
-			    session.setAttribute("myorder",albumArray); //add array to session 
 			}else{
-				//already ordered something, get current order
+				// already ordered something, get current order
 			   albumArray = (ArrayList<String>)session.getAttribute("myorder");
 			}
 			
-			// add our album to the order
-			albumArray.add(r_id);
-				session.setAttribute("myorder", albumArray);
+			albumArray.add(r_id);							// Add our album to the order and
+			session.setAttribute("myorder", albumArray);	// add the array to the session to keep it up to date
 				
 			// Might as well display the album details
-			// Getting the  details from the database
-			
-			Connection conn =null; // Create connection object
-			String database = "bellingm"; // Name of database
-			String user = "bellingm"; // 
+			// Getting the  details from the database			
+			Connection conn = null; 						// Create connection object
+			String database = "bellingm"; 					// Name of database
+			String user 	= "bellingm";
 			String password = "Lerkmant3";
-			String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
+			String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 			
 
 			try{
@@ -88,15 +92,16 @@ public class AddToOrder extends HttpServlet {
 			    System.err.println(e);
 			}
 			
-			// connecting to database
 			try{
+				// connecting to database
 			    conn = DriverManager.getConnection(url, user, password);
+			    // Create the string to query the database
 			    String selectSQL = "select * from music_recordings where recording_id ='" + Integer.parseInt(r_id) + "'";
-			    System.err.println("DEBUG: Query: " + selectSQL);
-			    Statement stmt = conn.createStatement();
-			    ResultSet rs1 = stmt.executeQuery(selectSQL);
-			    rs1.next();
-			    
+			    System.err.println("DEBUG: Query: " + selectSQL);	// Print the SQL string to the console for debugging
+			    Statement stmt = conn.createStatement();			
+			    ResultSet rs1 = stmt.executeQuery(selectSQL);		// Here is where we actually query the database, the data returned is stored in a ResultSet
+			    rs1.next();											// and is read one line at a time, though here we only have one line returned
+			    // The details of the album are shown in a table
 			    out.println("<p>The following album has been added to your order:<p>");
 			    out.println("<table id=\"musicList\" <tr><th></th><th></th></tr>");
 			    out.println("<tr><td>Artist</td><td>" + rs1.getString("artist_name") + "</td></tr>");

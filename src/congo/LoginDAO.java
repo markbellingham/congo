@@ -1,3 +1,8 @@
+/**
+ * Mark Bellingham - 14032098
+ * Web and Mobile Development assignment 2015
+ */
+
 package congo;
 
 import java.io.*;
@@ -32,35 +37,34 @@ public class LoginDAO extends HttpServlet {
 
     public static boolean validate(String email, String passwd, HttpServletRequest request, HttpServletResponse response) {
     	
-    	boolean status = false;
+    	boolean status = false;							// Default login status is false
     	
-		Connection conn = null; // Create connection object
-		String database = "bellingm"; // Name of database
-		String user = "bellingm"; // 
+		// Connection information			
+		Connection conn = null; 						// Create connection object
+		String database = "bellingm"; 					// Name of database
+		String user 	= "bellingm";
 		String password = "Lerkmant3";
-		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
+		String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 		
 		ArrayList<String> albumArray = new ArrayList<String>();  // albumArray is list of the albums in our order
 		
-		//get a session
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession();		// Get a session
 		
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    conn = DriverManager.getConnection(url, user, password);
 		    
-		    java.sql.PreparedStatement ps = conn.prepareStatement("select * from congo_customers where email = '" + email + "' and password = '" + passwd + "'");
-		    
+		    java.sql.PreparedStatement ps = conn.prepareStatement("select * from congo_customers where email = '" + email + "' and password = '" + passwd + "'");		    
 		    ResultSet rs = ps.executeQuery();
 		    
 		    if (rs.next()) {
 		    	status = true;
+		    	// If the login information is correct, put these parameters into the session
 		    	session.setAttribute("custid", 	rs.getString("custid"));
 		    	session.setAttribute("fname", 	rs.getString("fname"));
 		    	session.setAttribute("lname", 	rs.getString("lname"));
 		    	session.setAttribute("myorder",albumArray); //add array to session 
-		    }
-		    
+		    }		    
 		} catch(Exception e) {
 		    System.err.println(e);
 		}

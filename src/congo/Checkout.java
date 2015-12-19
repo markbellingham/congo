@@ -1,3 +1,8 @@
+/**
+ * Mark Bellingham - 14032098
+ * Web and Mobile Development assignment 2015
+ */
+
 package congo;
 
 import java.io.IOException;
@@ -37,27 +42,35 @@ public class Checkout extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String docType = "<!DOCTYPE HTML >" +
-				"<html><head>" +
-				"<meta charset=\"UTF-8\">" +
-				"<title>Congo's Music Store</title>" +
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
-	
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
+		// Connection information			
+		Connection conn = null; 						// Create connection object
+		String database = "bellingm"; 					// Name of database
+		String user 	= "bellingm";
+		String password = "Lerkmant3";
+		String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 		
-	    // going to check the Session for albums, need to 'get' it			
-		HttpSession session = request.getSession();
+		// Create string with the HTML header information
+		String docType = 	"<!DOCTYPE HTML >" +
+							"<html><head>" +
+							"<meta charset=\"UTF-8\">" +
+							"<title>Congo's Music Store</title>" +
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\">" +
+							"<script src=\"sorttable.js\"></script></head><body>";
+		response.setContentType("text/html"); 
+
+		PrintWriter out = response.getWriter();			// Initialise the printwriter for outputting to the browser			
+		HttpSession session = request.getSession();		// Get a session
 		
-		// print the title and menu
-		out.println(docType);
 		if (session.getAttribute("custid") == null) {
-			out.print("You are not logged in");
+			// If the user somehow got to this page without being logged in, redirect them
 			response.sendRedirect("login.html");
-			return;
 		} else {
+			// Otherwise welcome them by name
 			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 		}
+		
+		// Print the title, headers and menu
+		out.println(docType);
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
@@ -70,7 +83,7 @@ public class Checkout extends HttpServlet {
 		// albumArray is an array of the album names in our order
 		ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");
 		
-		//Check to see if we got here without choosing a album, if we did session is 'new'			
+		// Check to see if we got here without choosing a album			
 		if ( albumArray == null ){
 			out.print("Sorry there has been a mistake. Please click the link to <a href=\"index.html\">go Home</a>");
 		    return;
@@ -82,13 +95,6 @@ public class Checkout extends HttpServlet {
 		// Create a new arrayList to store the final order for submission
 		ArrayList<Integer[]> orderArray = new ArrayList<Integer[]>();
 		
-		Connection conn = null; // Create connection object
-		String database = "bellingm"; // Name of database
-		String user = "bellingm"; // 
-		String password = "Lerkmant3";
-		String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
-		
-
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    conn = DriverManager.getConnection(url, user, password);
@@ -97,7 +103,7 @@ public class Checkout extends HttpServlet {
 		}
 
 		
-		// use names stored in albumArray to query database
+		// Use names stored in albumArray to query database
 		String selectSQL1 = "select * from music_recordings where ";
 		for ( int i = 0; i < albumArray.size(); i++){
 			// build up select statement from all albums currently ordered and stored in albumArray
@@ -109,15 +115,15 @@ public class Checkout extends HttpServlet {
 		
 		try{
 		    System.err.println("DEBUG: Query: " + selectSQL1);
-		    Statement stmt = conn.createStatement();
-		    ResultSet rs1 = stmt.executeQuery(selectSQL1);
+		    Statement stmt 	= conn.createStatement();
+		    ResultSet rs1 	= stmt.executeQuery(selectSQL1);
+		    
+			System.out.println(albumArray);							// Print the array to the console for debugging
 		    
 		    out.println("<div id=\"page_title\"><h2>Checkout</h2></div>");
 		    // print out table header
 			out.println("<table id=\"musicList\">" +
 			    "<tr><th>Artist</th><th>Album</th><th>Album Price</th><th>Quantity</th><th>Totals</th></tr>");
-			
-			System.out.println(albumArray);
 			// print out table rows one for each row returned in rs1
 			while(rs1.next()){
 			    out.print("<tr>");
@@ -130,30 +136,27 @@ public class Checkout extends HttpServlet {
 			    
 			    totalPerAlbum = rs1.getFloat("price") * quantity;	// Get the total cost for each album
 			    grandTotal += totalPerAlbum;						// Get the total cost of all albums
-			    // Show how many of each album there are
-			    out.print("<td>" + quantity + "</td>");
-			    out.print("<td>£" + totalPerAlbum + "</td>");
-			    // Create arrayList containing the final order 
+			    out.print("<td>" + quantity + "</td>");				// Show how many of each album there are
+			    out.print("<td>£" + totalPerAlbum + "</td>");		// Print total cost for each album
+			    // Create arrayList containing the final order that we can insert into the database
 			    Integer array[] = {rs1.getInt("recording_id"), quantity};
 			    orderArray.add(array);
 			}
 		    }catch(SQLException e ){
 		    System.err.println(e);
 		    }
-			out.println("<tr>");
-			// Print the total for all albums
-			out.print("<td colspan=\"4\"><b>Total</b></td>");
-			out.print("<td><b>£" + String.format("%.2f", grandTotal) + "</b></td>");
+			out.print("<tr><td colspan=\"4\"><b>Total</b></td>");	// Print the total for all albums, formatted to 2 decimal places
+			out.print("<td><b>£" + String.format("%.2f", grandTotal) + "</b></td></tr>");
 			// Close table
-			out.println("</tr></table>");
+			out.println("</table>");
 			out.println("<br/><br/>");
 			out.println("<form action=\"SubmitOrder\" method=\"get\">" +
-						"<input type=\"submit\" value=\"Submit\"></form>");
+						"<input type=\"submit\" value=\"Submit Order\"></form>");
 			
 			out.println("<p><a href=\"index.html\">Go Home<a>");
 			out.println("</body></html>");
 			
-			session.setAttribute("myFinalOrder", orderArray);
+			session.setAttribute("myFinalOrder", orderArray);		// Put the finalised order into the session
 	}
 
 	/**

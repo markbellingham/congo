@@ -1,3 +1,8 @@
+/**
+ * Mark Bellingham - 14032098
+ * Web and Mobile Development assignment 2015
+ */
+
 package congo;
 
 import java.io.IOException;
@@ -36,39 +41,38 @@ public class RemoveAlbum extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String docType = 	"<!DOCTYPE HTML >" +
-				"<html><head>" +
-				"<meta charset=\"UTF-8\">" +
-				"<title>Congo's Music Store</title>" +
-				"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";
-		
+		// Create string with the HTML header information
+		String docType 	= 	"<!DOCTYPE HTML >" +
+							"<html><head>" +
+							"<meta charset=\"UTF-8\">" +
+							"<title>Congo's Music Store</title>" +
+							"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/stylesheet.css\"></head><body>";		
 			response.setContentType("text/html"); 
-			PrintWriter out = response.getWriter();
 			
-			// get a session
-			HttpSession session = request.getSession() ;
+			PrintWriter out = response.getWriter();			// Initialise the printwriter for outputting to the browser			
+			HttpSession session = request.getSession();		// Get a session
 
-			// find out the album name passed in from ShowOrder
-			String r_id = request.getParameter("r_id");
+			String r_id = request.getParameter("r_id");		// Find out the album name passed in from ShowOrder
 			
-			// print the title and menu
-			out.println(docType);
-			if (session.getAttribute("custid") == null) {
-				out.print("You are not logged in");
+			if (session.getAttribute("custid") == null) {	// Redirect if the user somehow reaches this page without being logged in
+				request.getRequestDispatcher("login.html").forward(request,response);
 			} else {
+				// If they are logged in, welcome them by name
 				out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			}
+			
+			// Print the title, headers and menu
+			out.println(docType);
 			out.println("<img id=\"logo\" src=\"images/logo.png\">");
 			out.println("<header id=\"name\">");
 			out.println("<h1>Congo's Music Store</h1></header><br/>");
 			out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a>" +
-					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
+						" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 			
 			ArrayList<String> albumArray;  // albumArray is list of the albums on our order
 			
 			albumArray = (ArrayList<String>)session.getAttribute("myorder");
 			
-			System.out.println(albumArray.size());
 			// remove all instances of the selected album from the order
 			albumArray.removeAll(Collections.singleton(r_id));
 			
@@ -77,11 +81,11 @@ public class RemoveAlbum extends HttpServlet {
 				
 			// Might as well display the album details
 			// Getting the  details from the database			
-			Connection conn = null; // Create connection object
-			String database = "bellingm"; // Name of database
-			String user = "bellingm"; // 
+			Connection conn = null; 						// Create connection object
+			String database = "bellingm"; 					// Name of database
+			String user 	= "bellingm";
 			String password = "Lerkmant3";
-			String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
+			String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
 			
 
 			try{
@@ -90,9 +94,10 @@ public class RemoveAlbum extends HttpServlet {
 			    System.err.println(e);
 			}
 			
-			// connecting to database
 			try{
+				// connecting to database
 			    conn = DriverManager.getConnection(url, user, password);
+			    // Create the string to query the database
 			    String selectSQL = "select * from music_recordings where recording_id ='" + r_id + "'";
 			    System.err.println("DEBUG: Query: " + selectSQL);	// to help find errors in the SQL statement - only printed to console
 			    Statement stmt = conn.createStatement();
