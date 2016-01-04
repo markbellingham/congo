@@ -7,17 +7,11 @@ I have removed the connection information because it linked to the university se
 
 Features implemented are (refer to assignment brief):
 
-Task 1 (40%-50%):
+Task 1 (40%-50%): 1) 2) 3) 4) 5)
 
-1) 2) 3) 4) 5)
+Task 2 (50%-60%): 1) 2) 3) 4) 5) 6)
 
-Task 2 (50%-60%)
-
-1) 2) 3) 4) 5) 6)
-
-Task 3 (60%-70%)
-
-1) 2)
+Task 3 (60%-70%): 1) 2)
 
 Task 4 (70%-80%)
 
@@ -33,9 +27,7 @@ Use of DAO (for the login system)
 Listings can be ordered by price or title or artist etc
 Customers cannot buy albums where stock count is zero
 
-Not implemented:
-
-Task 4 (70%-80%)
+Not implemented: Task 4 (70%-80%)
 
 Admin users can get details of all current orders
 Admin can amend stock database by deleting/adding albums
