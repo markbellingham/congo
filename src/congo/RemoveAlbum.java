@@ -82,10 +82,10 @@ public class RemoveAlbum extends HttpServlet {
 			// Might as well display the album details
 			// Getting the  details from the database			
 			Connection conn = null; 						// Create connection object
-			String database = "bellingm"; 					// Name of database
-			String user 	= "bellingm";
-			String password = "Lerkmant3";
-			String url 		= "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk/" + database;
+			String database = "xxxxxxxx"; 					// Name of database
+			String user 	= "xxxxxxxx";
+			String password = "xxxxxxxx";
+			String url 		= "jdbc:mysql://xxxxxxxx" + database;
 			
 
 			try{
