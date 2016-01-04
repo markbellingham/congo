@@ -86,7 +86,7 @@ public class ShowAllCustOrders extends HttpServlet {
 		
 		// Create select statement to get all the customer's orders
 		String selectSQL1 = "select * from congo_orders o, congo_order_details d, music_recordings r " + 
-							"where o.custid = " + custid + " and o.orderid = d.orderid and d.recording_id = r.recording_id";
+							"where o.custid = " + custid + " and o.orderid = d.orderid and d.recording_id = r.recording_id order by o.order_date";
 		
 		try {
 			// Execute the statement, results stored in the ResultSet rs1
@@ -103,7 +103,7 @@ public class ShowAllCustOrders extends HttpServlet {
 		    	// Retrieve the results that came back from the database and print them in the table, one line at a time
 		    	out.print("<tr>");
 		    	out.print("<td>" + rs1.getString("artist_name") + "</td>");
-		    	out.print("<td>" + rs1.getString("title") + "</td>");
+		    	out.print("<td><a href=\"TrackLister?r_id="+rs1.getInt("recording_id") + "&&name=" + rs1.getString("artist_name") + "&&album="+ rs1.getString("title") + "\">" + rs1.getString("title") + "</a></td>");
 		    	out.print("<td>" + rs1.getString("price") + "</td>");
 		    	out.print("<td>" + rs1.getString("order_quantity") + "</td>");
 		    	// Calculate total cost for this album and print it to 2 decimal places

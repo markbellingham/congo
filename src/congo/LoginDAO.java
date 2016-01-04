@@ -48,7 +48,7 @@ public class LoginDAO extends HttpServlet {
 		
 		ArrayList<String> albumArray = new ArrayList<String>();  // albumArray is list of the albums in our order
 		
-		HttpSession session = request.getSession();		// Get a session
+		HttpSession session = request.getSession();				// Get a session
 		
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -64,6 +64,13 @@ public class LoginDAO extends HttpServlet {
 		    	session.setAttribute("fname", 	rs.getString("fname"));
 		    	session.setAttribute("lname", 	rs.getString("lname"));
 		    	session.setAttribute("myorder",albumArray); //add array to session 
+		    	/*
+		    	if (rs.getInt("admin") == 1) {
+		    		session.setAttribute("admin", 1);
+		    	} else {
+		    		session.setAttribute("admin", 0);
+		    	}
+		    	*/
 		    }		    
 		} catch(Exception e) {
 		    System.err.println(e);

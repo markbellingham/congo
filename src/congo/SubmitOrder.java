@@ -139,7 +139,8 @@ public class SubmitOrder extends HttpServlet {
 		out.println("Your order has been successfully submitted.");
 		out.println("To see all your orders, <a href=\"ShowAllCustOrders\">Click Here</a>");
 		
-		
+		session.setAttribute("myFinalOrder", null);
+		session.setAttribute("myOrder", null);
 		
 	}
 

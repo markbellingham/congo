@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Welcome
+ * Servlet implementation class ShowCurrentOrders
  */
-@WebServlet("/Welcome")
-public class Welcome extends HttpServlet {
+@WebServlet("/ShowCurrentOrders")
+public class ShowCurrentOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Welcome() {
+    public ShowCurrentOrders() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,7 +50,10 @@ public class Welcome extends HttpServlet {
 		PrintWriter out = response.getWriter();			// Initialise the printwriter for outputting to the browser			
 		HttpSession session = request.getSession();		// Get a session
 		
-		int custid = 0;
+		String stdate = request.getParameter("stdate");
+		String endate = request.getParameter("endate");
+		
+		int custid = 0;		
 		if (session.getAttribute("custid") == null) {
 			// If the user somehow got to this page without being logged in, redirect them
 			request.getRequestDispatcher("login.html").forward(request,response);
@@ -60,26 +62,15 @@ public class Welcome extends HttpServlet {
 			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 			custid = Integer.parseInt((String) session.getAttribute("custid"));
 		}
-		
+			
 		// Print the title, headers and menu
 		out.println(docType);
 		out.println("<img id=\"logo\" src=\"images/logo.png\">");
 		out.println("<header id=\"name\">");
 		out.println("<h1>Congo's Music Store</h1></header><br/>");
 		out.println("<nav><a href=\"index.html\">Home</a> | <a href=\"category.html\">Categories</a> | <a href=\"price.html\">Price Picker</a> | <a href=\"artist.html\">Artist Finder</a>" +
-					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br/><br/>");
+					" | <a href=\"show_my_order\">Show Order</a> | <a href=\"ShowAllCustOrders\">Show all my orders</a> | <a href=\"login.html\">Log in/Register</a></nav><br /><br />");
 		
-		/* Enable admin options if admin is logged in
-		int admin = Integer.parseInt((String) session.getAttribute("admin"));		
-		if (admin == 1) {
-			out.println("<a href=\"ShowCurrentOrders.html\">Show Orders from a date range</a><br/><br/>");
-			out.println("<a href=\"AddOrDelete\">Add or delete albums</a>");
-		}
-		*/
-		
-		// albumArray is an array of the album names in our order
-		ArrayList<String> albumArray = (ArrayList<String>)session.getAttribute("myorder");		
-
 		try{
 		    Class.forName("com.mysql.jdbc.Driver").newInstance();
 		    conn = DriverManager.getConnection(url, user, password);
@@ -87,6 +78,9 @@ public class Welcome extends HttpServlet {
 		    System.err.println(e);
 		}
 		
+		// Create select statement
+		String selectSQL = "select * from congo_orders o, congo_order_details d, congo_customers c, music_recordings r " +
+							"where o.orderid = d.orderid and d.recording_id = r.recording_id and o.custid = c.custid and ";
 	}
 
 	/**

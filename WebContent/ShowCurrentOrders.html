@@ -2,7 +2,7 @@
 Mark Bellingham - 14032098
 Web and Mobile Development assignment 2015
 -->
- 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,17 +20,12 @@ Web and Mobile Development assignment 2015
 	</nav>
 	<br />
 	<br />
-	<form action="PricePicker">
-		<select name="price">
-			<option value="10">Under £10</option>
-			<option value="11">£10 - £11</option>
-			<option value="12">£11 - £12</option>
-			<option value="13">£12 - £13</option>
-			<option value="14">£13 - £14</option>
-			<option value="15">£14 - £15</option>
-			<option value="16">£15 - £16</option>
-		</select>
-		<input type="submit" value="Submit">
+	<p>Show all orders within a date range</p><br/><br/>
+	<form action="ShowCurrentOrders" method="get">
+		<p>From</p>
+		<input type="date" name="stdate"><p>To</p>
+		<input type="date" name="endate"><br/><br/>
+		<input type="submit" name="submit">
 	</form>
 </body>
 </html>

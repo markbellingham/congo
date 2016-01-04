@@ -71,7 +71,7 @@ public class ShowOrder extends HttpServlet {
 			// If the user somehow got to this page without being logged in, redirect them
 			request.getRequestDispatcher("login.html").forward(request,response);
 		} else {
-			// Otherwise welcome them by name and get their id
+			// Otherwise welcome them by name
 			out.print("Welcome " + session.getAttribute("fname") + " " + session.getAttribute("lname"));
 		}
 		
