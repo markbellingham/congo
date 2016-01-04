@@ -16,18 +16,18 @@ Task 3 (60%-70%): 1) 2)
 Task 4 (70%-80%)
 
 Login system (customer only)
-Those not logged in can access the searches but not buy anything
-Registration screen and details stored in suitable database tables
-Customers have a unique customer number
-Customers can check their previous orders
+Those not logged in can access the searches but not buy anything.
+Registration screen and details stored in suitable database tables.
+Customers have a unique customer number.
+Customers can check their previous orders.
 
 Other tasks (80%+)
 
-Use of DAO (for the login system)
-Listings can be ordered by price or title or artist etc
-Customers cannot buy albums where stock count is zero
+Use of DAO (for the login system).
+Listings can be ordered by price or title or artist etc.
+Customers cannot buy albums where stock count is zero.
 
 Not implemented: Task 4 (70%-80%)
 
-Admin users can get details of all current orders
-Admin can amend stock database by deleting/adding albums
+Admin users can get details of all current orders.
+Admin can amend stock database by deleting/adding albums.
