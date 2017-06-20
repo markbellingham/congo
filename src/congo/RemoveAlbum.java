@@ -82,10 +82,10 @@ public class RemoveAlbum extends HttpServlet {
 			// Might as well display the album details
 			// Getting the  details from the database			
 			Connection conn = null; 						// Create connection object
-			String database = "xxxxxxxx"; 					// Name of database
-			String user 	= "xxxxxxxx";
-			String password = "xxxxxxxx";
-			String url 		= "jdbc:mysql://xxxxxxxx" + database;
+			String database = "congo"; 					// Name of database
+			String user 	= "mark";
+			String password = "Excite10";
+			String url 		= "jdbc:mysql://localhost:3306/" + database;
 			
 
 			try{
@@ -98,7 +98,7 @@ public class RemoveAlbum extends HttpServlet {
 				// connecting to database
 			    conn = DriverManager.getConnection(url, user, password);
 			    // Create the string to query the database
-			    String selectSQL = "select * from music_recordings where recording_id ='" + r_id + "'";
+			    String selectSQL = "select * from Music_Recordings where recording_id ='" + r_id + "'";
 			    System.err.println("DEBUG: Query: " + selectSQL);	// to help find errors in the SQL statement - only printed to console
 			    Statement stmt = conn.createStatement();
 			    ResultSet rs1 = stmt.executeQuery(selectSQL);		// Create a result set with the data returned by the SQL statement

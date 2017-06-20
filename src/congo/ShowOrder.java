@@ -44,10 +44,10 @@ public class ShowOrder extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Connection information			
 		Connection conn = null; 						// Create connection object
-		String database = "xxxxxxxx"; 					// Name of database
-		String user 	= "xxxxxxxx";
-		String password = "xxxxxxxx";
-		String url 		= "xxxxxxxx" + database;
+		String database = "congo"; 					// Name of database
+		String user 	= "mark";
+		String password = "Excite10";
+		String url 		= "jdbc:mysql://localhost:3306/" + database;
 		
 		// Create string with the HTML header information
 		String docType = 	"<!DOCTYPE HTML >" +
@@ -111,7 +111,7 @@ public class ShowOrder extends HttpServlet {
 
 		
 		// use names stored in albumArray to query database
-		String selectSQL1 = "select * from music_recordings where ";
+		String selectSQL1 = "select * from Music_Recordings where ";
 		for ( int i = 0; i < albumArray.size(); i++){
 			// build up select statement from all albums currently ordered and stored in albumArray
 		    if (i != 0){

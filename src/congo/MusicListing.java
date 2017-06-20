@@ -36,10 +36,10 @@ public class MusicListing extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Connection information			
 		Connection conn = null; 						// Create connection object
-		String database = "xxxxxxxx"; 					// Name of database
-		String user 	= "xxxxxxxx";
-		String password = "xxxxxxxx";
-		String url 		= "jdbc:mysql://xxxxxxxx" + database;
+		String database = "congo"; 					// Name of database
+		String user 	= "mark";
+		String password = "Excite10";
+		String url 		= "jdbc:mysql://localhost:3306/" + database;
 
 		// Create string with the HTML header information
 		String docType = 	"<!DOCTYPE HTML >" +
@@ -85,7 +85,7 @@ public class MusicListing extends HttpServlet {
 				
 		try{
 			// Create select statement and execute it
-		    String selectSQL = "select * from music_recordings";
+		    String selectSQL = "select * from Music_Recordings";
 		    Statement stmt = conn.createStatement();
 		    ResultSet rs1 = stmt.executeQuery(selectSQL);
 		    out.println("<br/><br/>");

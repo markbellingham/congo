@@ -48,3 +48,4 @@ CREATE TABLE congo_order_details (
     order_quantity INT(3),
     PRIMARY KEY (orderid, recording_id)
 );
+

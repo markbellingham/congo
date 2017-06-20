@@ -55,11 +55,11 @@ public class Login extends HttpServlet {
 	    // going to check the Session for albums, need to 'get' it			
 		HttpSession session = request.getSession();
 	
-		Connection conn = null;			// Create connection object
-		String database = "xxxxxxxx";	// Name of database
-		String user 	= "xxxxxxxx"; 
-		String password = "xxxxxxxx";
-		String url 		= "jdbc:mysql://xxxxxxxx" + database;
+		Connection conn = null; 						// Create connection object
+		String database = "congo"; 					// Name of database
+		String user 	= "mark";
+		String password = "Excite10";
+		String url 		= "jdbc:mysql://localhost:3306/" + database;
 		
 		String email 	= request.getParameter("email");
 		String passwd 	= request.getParameter("password");

@@ -41,10 +41,10 @@ public class ShowAllCustOrders extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Connection information			
 		Connection conn = null; 						// Create connection object
-		String database = "xxxxxxxx"; 					// Name of database
-		String user 	= "xxxxxxxx";
-		String password = "xxxxxxxx";
-		String url 		= "jdbc:mysql://xxxxxxxx" + database;
+		String database = "congo"; 					// Name of database
+		String user 	= "mark";
+		String password = "Excite10";
+		String url 		= "jdbc:mysql://localhost:3306/" + database;
 		
 		// Create string with the HTML header information
 		String docType = 	"<!DOCTYPE HTML >" +
@@ -85,7 +85,7 @@ public class ShowAllCustOrders extends HttpServlet {
 		}
 		
 		// Create select statement to get all the customer's orders
-		String selectSQL1 = "select * from congo_orders o, congo_order_details d, music_recordings r " + 
+		String selectSQL1 = "select * from congo_orders o, congo_order_details d, Music_Recordings r " + 
 							"where o.custid = " + custid + " and o.orderid = d.orderid and d.recording_id = r.recording_id order by o.order_date";
 		
 		try {
