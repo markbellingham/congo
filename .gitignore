@@ -1,6 +1,7 @@
 # Created by https://www.gitignore.io/api/java,eclipse
 
 ### Java ###
+build/
 *.class
 
 # Mobile Tools for Java (J2ME)
