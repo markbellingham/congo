@@ -1,4 +1,10 @@
-# congo
+# Congo
+
+You can see a working demonstration of this project here:
+
+https://markbellingham.me/Congo/albums
+
+
 A website linking html/css, java, and mysql
 
 The brief was to create a website which would take data from a mysql database and display it in a browser via Tomcat and Java servlets.
