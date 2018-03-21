@@ -1,9 +1,8 @@
-# Congo
-
 You can see a working demonstration of this project here:
 
 https://markbellingham.me/Congo/albums
 
+# Congo
 
 A website linking html/css, java, and mysql
 
